@@ -7,7 +7,16 @@ class NotiPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Notification'),
+        backgroundColor: Colors.blue,
+        title: const Text(
+          'Notifications',
+          style: TextStyle(
+                color: Colors.white,
+                fontFamily: 'Montserrat',
+                fontWeight: FontWeight.bold,
+                fontSize: 28.0,
+              ),
+        ),
       ),
       body: const Center(
         child: Column(
