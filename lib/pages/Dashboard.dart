@@ -21,17 +21,27 @@ class _DashboardState extends State<Dashboard> {
       ),
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('ZaBoteru'),
+          backgroundColor: Colors.blue,
+          title: const Text(
+            'ZaBoteru',
+            style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: 'Montserrat',
+                  fontWeight: FontWeight.bold,
+                  fontStyle: FontStyle.italic,
+                  fontSize: 28.0,
+                ),
+          ),
           actions: <Widget>[
             IconButton(
-              icon: const Icon(Icons.notifications),
+              icon: const Icon(Icons.notifications, color: Colors.white, size: 28,),
               onPressed: () {
                 // Navigate to the 'notification' page here
                 Navigator.pushNamed(context, '/notification');
               },
             ),
             IconButton(
-              icon: const Icon(Icons.settings),
+              icon: const Icon(Icons.settings, color: Colors.white, size: 28,),
               onPressed: () {
                 // Navigate to the 'settings' page here
                 Navigator.pushNamed(context, '/settings');
@@ -46,12 +56,13 @@ class _DashboardState extends State<Dashboard> {
           onPressed: () {},
           backgroundColor: Colors.blue,
           shape: const CircleBorder(),
-          child: const Icon(Icons.bluetooth),
+          child: const Icon(Icons.bluetooth, color: Colors.white, size: 28,),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         bottomNavigationBar: BottomAppBar(
+          color: Colors.white,
           shape: const CircularNotchedRectangle(),
-          notchMargin: 10,
+          notchMargin: 8,
           // ignore: sized_box_for_whitespace
           child: Container(
             height: 60,
@@ -95,7 +106,7 @@ class _DashboardState extends State<Dashboard> {
                           Icon(Icons.pie_chart,
                           color: currentTab == 1 ? Colors.blue: Colors.grey,),
                           Text(
-                            'Intake',
+                            'Statistics',
                             style: TextStyle(
                               color: currentTab == 1 ? Colors.blue : Colors.grey,
                               ),
@@ -142,7 +153,7 @@ class _DashboardState extends State<Dashboard> {
                           Icon(Icons.water,
                           color: currentTab == 4 ? Colors.blue: Colors.grey,),
                           Text(
-                            'History',
+                            'Intake',
                             style: TextStyle(
                               color: currentTab == 4 ? Colors.blue : Colors.grey,
                               ),
