@@ -13,8 +13,7 @@ class Settings extends StatelessWidget {
           style: TextStyle(
             color: Colors.white,
             fontFamily: 'Montserrat',
-            fontWeight: FontWeight.bold,
-            fontSize: 28.0,
+            fontSize: 24.0,
           ),
         ),
         // Customize the IconTheme for the back button

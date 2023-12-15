@@ -75,6 +75,7 @@ class _DashboardState extends State<Dashboard> {
                     MaterialButton(
                       minWidth: 40,
                       onPressed: () {
+                        Navigator.pushNamed(context, '/dashbpard');
                         setState(() {
                           currentTab = 0;
                         });
@@ -96,6 +97,7 @@ class _DashboardState extends State<Dashboard> {
                     MaterialButton(
                       minWidth: 40,
                       onPressed: () {
+                        Navigator.pushNamed(context, '/statistics');
                         setState(() {
                           currentTab = 1;
                         });
@@ -122,8 +124,31 @@ class _DashboardState extends State<Dashboard> {
                     MaterialButton(
                       minWidth: 40,
                       onPressed: () {
+                        Navigator.pushNamed(context, '/intake');
                         setState(() {
-                          currentTab = 0;
+                          currentTab = 2;
+                        });
+                      },
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.water,
+                          color: currentTab == 2 ? Colors.blue: Colors.grey,),
+                          Text(
+                            'Intake',
+                            style: TextStyle(
+                              color: currentTab == 2 ? Colors.blue : Colors.grey,
+                              ),
+                          )
+                        ],
+                      ),
+                    ),
+                    MaterialButton(
+                      minWidth: 40,
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/intake');
+                        setState(() {
+                          currentTab = 3;
                         });
                       },
                       child: Column(
@@ -135,27 +160,6 @@ class _DashboardState extends State<Dashboard> {
                             'Intake',
                             style: TextStyle(
                               color: currentTab == 3 ? Colors.blue : Colors.grey,
-                              ),
-                          )
-                        ],
-                      ),
-                    ),
-                    MaterialButton(
-                      minWidth: 40,
-                      onPressed: () {
-                        setState(() {
-                          currentTab = 1;
-                        });
-                      },
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.water,
-                          color: currentTab == 4 ? Colors.blue: Colors.grey,),
-                          Text(
-                            'Intake',
-                            style: TextStyle(
-                              color: currentTab == 4 ? Colors.blue : Colors.grey,
                               ),
                           )
                         ],

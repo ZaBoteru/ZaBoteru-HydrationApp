@@ -4,6 +4,8 @@ import 'package:zaboteru/pages/Dashboard.dart';
 import 'package:zaboteru/pages/NotificationPage.dart';
 import 'package:zaboteru/pages/Settings.dart';
 import 'package:lottie/lottie.dart';
+import 'package:zaboteru/pages/Statistics.dart';
+import 'package:zaboteru/pages/WaterIntake.dart';
 
 void main() {
   runApp(const ZaBoteru());
@@ -24,6 +26,8 @@ class ZaBoteru extends StatelessWidget {
       routes: {
         '/notification': (context) => const NotiPage(),
         '/settings': (context) => const Settings(),
+        '/statistics': (context) => const Statistics(),
+        '/intake': (context) => const WaterIntake(),
       },
       home: AnimatedSplashScreen(
         splash: Stack(
