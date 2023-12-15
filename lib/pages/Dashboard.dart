@@ -73,22 +73,25 @@ class _DashboardState extends State<Dashboard> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     MaterialButton(
+                      padding: const EdgeInsets.only(right: 7.0),
                       minWidth: 40,
                       onPressed: () {
                         Navigator.pushNamed(context, '/dashbpard');
-                        setState(() {
-                          currentTab = 0;
-                        });
+                        // setState(() {
+                        //   currentTab = 0;
+                        // });
                       },
-                      child: Column(
+                      child: const Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Icon(Icons.dashboard,
-                          color: currentTab == 0 ? Colors.blue: Colors.grey,),
+                          color: Colors.blue,
+                          // color: currentTab == 0 ? Colors.blue: Colors.grey,
+                          ),
                           Text(
                             'Dashboard',
                             style: TextStyle(
-                              color: currentTab == 0 ? Colors.blue : Colors.grey,
+                              // color: currentTab == 0 ? Colors.blue : Colors.grey,
                               ),
                           )
                         ],
@@ -98,19 +101,21 @@ class _DashboardState extends State<Dashboard> {
                       minWidth: 40,
                       onPressed: () {
                         Navigator.pushNamed(context, '/statistics');
-                        setState(() {
-                          currentTab = 1;
-                        });
+                        // setState(() {
+                        //   currentTab = 1;
+                        // });
                       },
-                      child: Column(
+                      child: const Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Icon(Icons.pie_chart,
-                          color: currentTab == 1 ? Colors.blue: Colors.grey,),
+                          color: Colors.blue,
+                          // color: currentTab == 1 ? Colors.blue: Colors.grey,
+                          ),
                           Text(
                             'Statistics',
                             style: TextStyle(
-                              color: currentTab == 1 ? Colors.blue : Colors.grey,
+                              // color: currentTab == 1 ? Colors.blue : Colors.grey,
                               ),
                           )
                         ],
@@ -122,22 +127,25 @@ class _DashboardState extends State<Dashboard> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     MaterialButton(
+                      padding: const EdgeInsets.only(right: 29.0),
                       minWidth: 40,
                       onPressed: () {
                         Navigator.pushNamed(context, '/intake');
-                        setState(() {
-                          currentTab = 2;
-                        });
+                        // setState(() {
+                        //   currentTab = 2;
+                        // });
                       },
-                      child: Column(
+                      child: const Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Icon(Icons.water,
-                          color: currentTab == 2 ? Colors.blue: Colors.grey,),
+                          color: Colors.blue,
+                          // color: currentTab == 2 ? Colors.blue: Colors.grey,
+                          ),
                           Text(
                             'Intake',
                             style: TextStyle(
-                              color: currentTab == 2 ? Colors.blue : Colors.grey,
+                              // color: currentTab == 2 ? Colors.blue : Colors.grey,
                               ),
                           )
                         ],
@@ -147,19 +155,21 @@ class _DashboardState extends State<Dashboard> {
                       minWidth: 40,
                       onPressed: () {
                         Navigator.pushNamed(context, '/intake');
-                        setState(() {
-                          currentTab = 3;
-                        });
+                        // setState(() {
+                        //   currentTab = 3;
+                        // });
                       },
-                      child: Column(
+                      child: const Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Icon(Icons.water,
-                          color: currentTab == 3 ? Colors.blue: Colors.grey,),
+                          color: Colors.blue,
+                          // color: currentTab == 3 ? Colors.blue: Colors.grey,
+                          ),
                           Text(
                             'Intake',
                             style: TextStyle(
-                              color: currentTab == 3 ? Colors.blue : Colors.grey,
+                              // color: currentTab == 3 ? Colors.blue : Colors.grey,
                               ),
                           )
                         ],

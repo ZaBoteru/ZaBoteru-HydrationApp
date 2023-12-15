@@ -41,7 +41,7 @@ class ZaBoteru extends StatelessWidget {
                   color: Colors.white,
                   fontFamily: 'Montserrat',
                   fontWeight: FontWeight.bold,
-                  fontSize: 36.0,
+                  fontSize: 38.0,
                 ),
               ),
             ),

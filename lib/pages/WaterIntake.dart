@@ -45,7 +45,7 @@ class _WaterIntakeState extends State<WaterIntake> {
         backgroundColor: Colors.blue,
         iconTheme: const IconThemeData(color: Colors.white),
         title: const Text(
-          'Water Intake Calculator',
+          'How much you need',
           style: TextStyle(
                   color: Colors.white,
                   fontFamily: 'Montserrat',
@@ -97,7 +97,13 @@ class _WaterIntakeState extends State<WaterIntake> {
                   // Handle form submission here
                   // You can access the entered values using the state variables
                 },
-                child: const Text('Submit'),
+                child: const Text(
+                  'Submit',
+                  style: TextStyle(
+                  fontFamily: 'Montserrat',
+                  fontSize: 16.0,
+                  ),  
+                ),
               ),
             ],
           ),
