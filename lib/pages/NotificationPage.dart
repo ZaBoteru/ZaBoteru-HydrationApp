@@ -17,6 +17,8 @@ class NotiPage extends StatelessWidget {
                 fontSize: 28.0,
               ),
         ),
+        // Customize the IconTheme for the back button
+        iconTheme: const IconThemeData(color: Colors.white),
       ),
       body: const Center(
         child: Column(

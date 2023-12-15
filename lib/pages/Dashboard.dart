@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:zaboteru/main.dart';
-import 'package:zaboteru/pages/LocalNotification.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
@@ -186,12 +184,6 @@ class DashboardContent extends StatefulWidget {
 class _DashboardContentState extends State<DashboardContent> {
 
   @override
-  void initState() {
-    super.initState();
-    LocalNotification.initialize(flutterLocalNotificationsPlugin);
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -207,18 +199,43 @@ class _DashboardContentState extends State<DashboardContent> {
         ),
         Text('Volume : $_volume'),
         ElevatedButton(
-          onPressed: () {
-            LocalNotification.showBigTextNotification(
-              title: 'Stay Hydrated!',
-              body: 'You last hydrated 2 hours ago.',
-              flutterLocalNotificationsPlugin: flutterLocalNotificationsPlugin);
-          },
+          onPressed: () {},
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.blue,
             elevation: 4,
           ),
           child: const Text(
             'Send notification',
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+          ),
+        ),
+        ElevatedButton(
+          onPressed: () {},
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.blue,
+            elevation: 4,
+          ),
+          child: const Text(
+            'Create notification',
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+          ),
+        ),
+                ElevatedButton(
+          onPressed: () {},
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.blue,
+            elevation: 4,
+          ),
+          child: const Text(
+            'Schedule',
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.bold,

@@ -1,6 +1,5 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:zaboteru/pages/Dashboard.dart';
 import 'package:zaboteru/pages/NotificationPage.dart';
 import 'package:zaboteru/pages/Settings.dart';
@@ -13,7 +12,6 @@ void main() {
 class ZaBoteru extends StatelessWidget {
   const ZaBoteru({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -28,7 +26,7 @@ class ZaBoteru extends StatelessWidget {
         '/settings': (context) => const Settings(),
       },
       home: AnimatedSplashScreen(
-      splash: Stack(
+        splash: Stack(
           fit: StackFit.expand,
           children: [
             Lottie.asset('assets/lottie/waterFill.json', fit: BoxFit.cover),
@@ -54,7 +52,3 @@ class ZaBoteru extends StatelessWidget {
     );
   }
 }
-
-final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-  FlutterLocalNotificationsPlugin();
-

@@ -11,12 +11,14 @@ class Settings extends StatelessWidget {
         title: const Text(
           'Settings',
           style: TextStyle(
-                color: Colors.white,
-                fontFamily: 'Montserrat',
-                fontWeight: FontWeight.bold,
-                fontSize: 28.0,
-              ),
-        ),      
+            color: Colors.white,
+            fontFamily: 'Montserrat',
+            fontWeight: FontWeight.bold,
+            fontSize: 28.0,
+          ),
+        ),
+        // Customize the IconTheme for the back button
+        iconTheme: const IconThemeData(color: Colors.white),
       ),
       body: const Center(
         child: Column(
