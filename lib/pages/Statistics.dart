@@ -20,10 +20,10 @@ class _StatisticsState extends State<Statistics> {
         title: const Text(
           'Statistics',
           style: TextStyle(
-                color: Colors.white,
-                fontFamily: 'Montserrat',
-                fontSize: 24.0,
-              ),
+            color: Colors.white,
+            fontFamily: 'Montserrat',
+            fontSize: 24.0,
+          ),
         ),
         // Customize the IconTheme for the back button
         iconTheme: const IconThemeData(color: Colors.white),
@@ -41,8 +41,13 @@ class _StatisticsState extends State<Statistics> {
                     selectedOption = newValue!;
                   });
                 },
-                items: <String>['daily', 'weekly', 'monthly', 'yearly', 'lifetime']
-                    .map<DropdownMenuItem<String>>((String value) {
+                items: <String>[
+                  'daily',
+                  'weekly',
+                  'monthly',
+                  'yearly',
+                  'lifetime'
+                ].map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
                     child: Text(value),
@@ -58,57 +63,52 @@ class _StatisticsState extends State<Statistics> {
 }
 
 class LineChartWidget extends StatelessWidget {
-  final Color gradientColor = 
-    const Color(0xff23b6e6);
+  final Color gradientColor = const Color(0xff23b6e6);
 
   const LineChartWidget({super.key});
 
   @override
-  Widget build(BuildContext context) => LineChart(
-    LineChartData(
-      minX: 0,
-      maxX: 11,
-      minY: 0,
-      maxY: 6,
-      gridData: FlGridData(
-        show: true,
-        getDrawingHorizontalLine: (value) {
-          return const FlLine(
-            color: Color(0xff37434d),
-            strokeWidth: 1,
-          );
-        },
-      ),
-      borderData: FlBorderData(
-        show: true,
-        border: Border.all(color: const Color(0xff37434d), width: 1),
-      ),
-      lineBarsData: [
-        LineChartBarData(
-          spots: [
-            const FlSpot(0, 3),
-            const FlSpot(2.6, 2),
-            const FlSpot(4.9, 5),
-            const FlSpot(6.8, 2.5),
-            const FlSpot(8, 4),
-            const FlSpot(9.5, 3),
-            const FlSpot(11, 4),
-            const FlSpot(0, 3),
-            const FlSpot(0, 3),
-            const FlSpot(0, 3),
-            const FlSpot(0, 3),
-            const FlSpot(0, 3),
-          ],
-          isCurved: true,
-          color: gradientColor,
-          dotData: const FlDotData(show: false),
-          barWidth: 5,
-          belowBarData: BarAreaData(
+  Widget build(BuildContext context) => LineChart(LineChartData(
+          minX: 0,
+          maxX: 11,
+          minY: 0,
+          maxY: 6,
+          gridData: FlGridData(
             show: true,
-            color: gradientColor,
-          )
-        )
-      ]
-    )
-  );
+            getDrawingHorizontalLine: (value) {
+              return const FlLine(
+                color: Color(0xff37434d),
+                strokeWidth: 1,
+              );
+            },
+          ),
+          borderData: FlBorderData(
+            show: true,
+            border: Border.all(color: const Color(0xff37434d), width: 1),
+          ),
+          lineBarsData: [
+            LineChartBarData(
+                spots: [
+                  const FlSpot(0, 3),
+                  const FlSpot(2.6, 2),
+                  const FlSpot(4.9, 5),
+                  const FlSpot(6.8, 2.5),
+                  const FlSpot(8, 4),
+                  const FlSpot(9.5, 3),
+                  const FlSpot(11, 4),
+                  const FlSpot(0, 3),
+                  const FlSpot(0, 3),
+                  const FlSpot(0, 3),
+                  const FlSpot(0, 3),
+                  const FlSpot(0, 3),
+                ],
+                isCurved: true,
+                color: gradientColor,
+                dotData: const FlDotData(show: false),
+                barWidth: 5,
+                belowBarData: BarAreaData(
+                  show: true,
+                  color: gradientColor,
+                ))
+          ]));
 }
