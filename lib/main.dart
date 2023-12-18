@@ -38,6 +38,7 @@ class ZaBoteru extends StatelessWidget {
             const Center(
               child: Text(
                 'ZaBoteru',
+                textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.white,
                   fontFamily: 'Montserrat',

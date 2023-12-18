@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+List<double> result = [];
+
 class WaterIntake extends StatefulWidget {
   const WaterIntake({super.key});
 
@@ -10,11 +12,11 @@ class WaterIntake extends StatefulWidget {
 
 class _WaterIntakeState extends State<WaterIntake> {
   String? selectedGender = '';
+  String? selectedCountry = '';
+  String? selectedActivity = '';
   double weight = 0.0;
   double height = 0.0;
-  String? selectedCountry = '';
   int age = 0;
-  String? selectedActivity = '';
   int glassesOfWater = 0;
 
   int currentTab = 2;
@@ -109,7 +111,7 @@ class _WaterIntakeState extends State<WaterIntake> {
                   selectedActivity = value;
                 });
               }),
-              _buildTextInput('Glasses of Water', TextInputType.number,
+              _buildTextInput('Glasses of Water (250 ml)', TextInputType.number,
                   (value) {
                 setState(() {
                   glassesOfWater = int.tryParse(value) ?? 0;
@@ -118,8 +120,14 @@ class _WaterIntakeState extends State<WaterIntake> {
               const SizedBox(height: 16.0),
               ElevatedButton(
                 onPressed: () {
-                  // Handle form submission here
-                  // You can access the entered values using the state variables
+                  result = calculateWaterIntake(
+                      selectedGender,
+                      selectedActivity,
+                      weight = 0.0,
+                      height,
+                      selectedCountry,
+                      age,
+                      glassesOfWater);
                 },
                 child: const Text(
                   'Submit',
@@ -301,4 +309,34 @@ class _WaterIntakeState extends State<WaterIntake> {
       ),
     );
   }
+}
+
+List<double> calculateWaterIntake(String? gender, String? exercise,
+    double weight, double height, String? country, int age, int waterGlasses) {
+  double baseWaterIntake = 0;
+  double activityWaterIntake = 0;
+  double totalWaterIntake = 0;
+  double neededWater = 0;
+
+  // in liter
+  if (gender == 'male') {
+    baseWaterIntake = 3.7;
+  } else {
+    baseWaterIntake = 2.7;
+  }
+
+  // outputs in liter
+  if (exercise == 'Rare') {
+    activityWaterIntake = 0.03 * weight;
+  } else if (exercise == 'Occasionally') {
+    activityWaterIntake = 0.04 * weight;
+  } else if (exercise == 'Weekly') {
+    activityWaterIntake = 0.05 * weight;
+  } else if (exercise == 'Daily') {
+    activityWaterIntake = 0.06 * weight;
+  }
+
+  totalWaterIntake = baseWaterIntake + activityWaterIntake;
+  neededWater = totalWaterIntake - waterGlasses * 0.25;
+  return [totalWaterIntake, neededWater];
 }

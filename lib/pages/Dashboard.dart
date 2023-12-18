@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:zaboteru/pages/WaterIntake.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
@@ -260,7 +261,8 @@ class _DashboardContentState extends State<DashboardContent> {
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                     child: const Text(
-                      'Days Streak',
+                      'Days Streak\n',
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 17.0,
@@ -278,9 +280,10 @@ class _DashboardContentState extends State<DashboardContent> {
                       color: Colors.blue,
                       borderRadius: BorderRadius.circular(10.0),
                     ),
-                    child: const Text(
-                      'Day Goal',
-                      style: TextStyle(
+                    child: Text(
+                      'Day Goal\n${result[0]}',
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 17.0,
                         fontWeight: FontWeight.bold,
@@ -297,9 +300,10 @@ class _DashboardContentState extends State<DashboardContent> {
                       color: Colors.blue,
                       borderRadius: BorderRadius.circular(10.0),
                     ),
-                    child: const Text(
-                      'Bottles to go',
-                      style: TextStyle(
+                    child: Text(
+                      'Bottles to go\n${result[1]}',
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 17.0,
                         fontWeight: FontWeight.bold,
