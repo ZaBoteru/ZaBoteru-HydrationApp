@@ -314,7 +314,7 @@ class _DashboardContentState extends State<DashboardContent> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       const Text(
-                        'Enable sterilization',
+                        'Enable Sterilization',
                         style: TextStyle(
                           color: Colors.black,
                           fontFamily: 'Montserrat',

@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
 
-class Settings extends StatelessWidget {
+class Settings extends StatefulWidget {
   const Settings({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
+  _SettingsState createState() => _SettingsState();
+}
+
+class _SettingsState extends State<Settings> {
+  bool isDark = false;
+
+  @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue,
@@ -14,27 +23,82 @@ class Settings extends StatelessWidget {
             color: Colors.white,
             fontFamily: 'Montserrat',
             fontSize: 24.0,
+            fontStyle: FontStyle.italic,
+            fontWeight: FontWeight.bold,
           ),
         ),
         // Customize the IconTheme for the back button
         iconTheme: const IconThemeData(color: Colors.white),
       ),
-      body: const Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Icon(
-              Icons.settings,
-              size: 100,
-              color: Colors.blue, // Adjust the color as needed
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          Container(
+            width: screenWidth,
+            height: 60,
+            margin: const EdgeInsets.all(6.0),
+            padding: const EdgeInsets.all(16.0),
+            decoration: BoxDecoration(
+              color: const Color.fromARGB(255, 178, 227, 254),
+              borderRadius: BorderRadius.circular(10.0),
             ),
-            SizedBox(height: 20),
-            Text(
-              'This is the settings page!',
-              style: TextStyle(fontSize: 18),
+            child: const Text(
+              'Change notification ringtone',
+              style: TextStyle(
+                color: Color.fromARGB(255, 33, 33, 34),
+                fontSize: 18.0,
+              ),
             ),
-          ],
-        ),
+          ),
+          Container(
+            width: screenWidth,
+            height: 60,
+            margin: const EdgeInsets.all(6.0),
+            padding: const EdgeInsets.all(16.0),
+            decoration: BoxDecoration(
+              color: const Color.fromARGB(255, 178, 227, 254),
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            child: const Text(
+              'Set Bedtime',
+              style: TextStyle(
+                color: Color.fromARGB(255, 33, 33, 34),
+                fontSize: 18.0,
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                const Text(
+                  'Dark Theme',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontFamily: 'Montserrat',
+                    fontSize: 18,
+                  ),
+                ),
+                Switch(
+                  value: isDark,
+                  onChanged: (value) {
+                    setState(() {
+                      isDark = value;
+                    });
+                  },
+                  activeColor: Colors.blue, // Color when the switch is ON
+                  activeTrackColor: const Color.fromARGB(
+                      255, 147, 191, 228), // Track color when the switch is ON
+                  inactiveTrackColor: const Color.fromARGB(
+                      255, 218, 218, 218), // Color when the switch is OFF
+                  inactiveThumbColor: const Color.fromARGB(255, 174, 174,
+                      174), // Track color when the switch is OFF),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

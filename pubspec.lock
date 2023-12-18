@@ -166,6 +166,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_annual_task:
+    dependency: "direct main"
+    description:
+      name: flutter_annual_task
+      sha256: e27e561a209e4fbc1f33699e35873f9a5632b88a76148844b6d82fee6d51d357
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.0"
   flutter_blue_plus:
     dependency: "direct main"
     description:
