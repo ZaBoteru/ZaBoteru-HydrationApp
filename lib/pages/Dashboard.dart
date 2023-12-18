@@ -207,9 +207,12 @@ class DashboardContent extends StatefulWidget {
 class _DashboardContentState extends State<DashboardContent> {
   bool isSterilization = false;
   bool isHeating = false;
+  DateTime today = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
+    String formattedDate = '${today.year}-${today.month}-${today.day}';
+
     return Scaffold(
         body: Center(
       child: Column(
@@ -217,10 +220,10 @@ class _DashboardContentState extends State<DashboardContent> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             const SizedBox(height: 20),
-            const Text(
-              'Today\n16 Dec 2023',
+            Text(
+              'Today\n$formattedDate',
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                 color: Color.fromARGB(255, 79, 79, 79),
                 fontFamily: 'Montserrat',
                 fontSize: 14,
