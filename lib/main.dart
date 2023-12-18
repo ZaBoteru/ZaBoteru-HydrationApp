@@ -26,6 +26,7 @@ class ZaBoteru extends StatelessWidget {
       routes: {
         '/notification': (context) => const NotiPage(),
         '/settings': (context) => const Settings(),
+        '/dashboard': (context) => const Dashboard(),
         '/statistics': (context) => const Statistics(),
         '/intake': (context) => const WaterIntake(),
       },
@@ -56,3 +57,24 @@ class ZaBoteru extends StatelessWidget {
     );
   }
 }
+
+
+/*
+##############################################################
+######################### TO-DO-LIST #########################
+##############################################################
+- Settings: add containers in column (Hardcoded: theme,
+  change notification ringtone, set bedtime so no notification)
+- Change the last icon of it (double intake page) in the navigation bar
+- Add the Bluetooth feature
+- Add the notification feature
+- Make the statistics page
+- Backend file for the water intake goal calculation
+- Based on the backend, there will be stateful text in multiple places such
+  as the stats in the dashboard (not sure if there will be other pages that
+  require this)
+- BONUS: make the application responsive to landscape mode and maintainable
+  on any screen size
+##############################################################
+###############################################################
+*/

@@ -14,189 +14,184 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.blue,
-          title: const Text(
-            'ZaBoteru',
-            style: TextStyle(
-              color: Colors.white,
-              fontFamily: 'Montserrat',
-              fontWeight: FontWeight.bold,
-              fontStyle: FontStyle.italic,
-              fontSize: 28.0,
-            ),
-          ),
-          actions: <Widget>[
-            IconButton(
-              icon: const Icon(
-                Icons.notifications,
-                color: Colors.white,
-                size: 28,
-              ),
-              onPressed: () {
-                // Navigate to the 'notification' page here
-                Navigator.pushNamed(context, '/notification');
-              },
-            ),
-            IconButton(
-              icon: const Icon(
-                Icons.settings,
-                color: Colors.white,
-                size: 28,
-              ),
-              onPressed: () {
-                // Navigate to the 'settings' page here
-                Navigator.pushNamed(context, '/settings');
-              },
-            ),
-          ],
-        ),
-        body: const Center(
-          child: DashboardContent(),
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {},
-          backgroundColor: Colors.blue,
-          shape: const CircleBorder(),
-          child: const Icon(
-            Icons.bluetooth,
+    return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading:
+            false, // Add this line to hide the back arrow
+        backgroundColor: Colors.blue,
+        title: const Text(
+          'ZaBoteru',
+          style: TextStyle(
             color: Colors.white,
-            size: 28,
+            fontFamily: 'Montserrat',
+            fontWeight: FontWeight.bold,
+            fontStyle: FontStyle.italic,
+            fontSize: 28.0,
           ),
         ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        bottomNavigationBar: BottomAppBar(
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(
+              Icons.notifications,
+              color: Colors.white,
+              size: 28,
+            ),
+            onPressed: () {
+              // Navigate to the 'notification' page here
+              Navigator.pushNamed(context, '/notification');
+            },
+          ),
+          IconButton(
+            icon: const Icon(
+              Icons.settings,
+              color: Colors.white,
+              size: 28,
+            ),
+            onPressed: () {
+              // Navigate to the 'settings' page here
+              Navigator.pushNamed(context, '/settings');
+            },
+          ),
+        ],
+      ),
+      body: const Center(
+        child: DashboardContent(),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        backgroundColor: Colors.blue,
+        shape: const CircleBorder(),
+        child: const Icon(
+          Icons.bluetooth,
           color: Colors.white,
-          shape: const CircularNotchedRectangle(),
-          notchMargin: 8,
-          // ignore: sized_box_for_whitespace
-          child: Container(
-              height: 60,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      MaterialButton(
-                        padding: const EdgeInsets.only(right: 7.0),
-                        minWidth: 40,
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/dashbpard');
-                          // setState(() {
-                          //   currentTab = 0;
-                          // });
-                        },
-                        child: const Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.dashboard,
-                              color: Colors.blue,
-                              // color: currentTab == 0 ? Colors.blue: Colors.grey,
-                            ),
-                            Text(
-                              'Dashboard',
-                              style: TextStyle(
-                                  // color: currentTab == 0 ? Colors.blue : Colors.grey,
-                                  ),
-                            )
-                          ],
-                        ),
-                      ),
-                      MaterialButton(
-                        minWidth: 40,
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/statistics');
-                          // setState(() {
-                          //   currentTab = 1;
-                          // });
-                        },
-                        child: const Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.pie_chart,
-                              color: Colors.blue,
-                              // color: currentTab == 1 ? Colors.blue: Colors.grey,
-                            ),
-                            Text(
-                              'Statistics',
-                              style: TextStyle(
-                                  // color: currentTab == 1 ? Colors.blue : Colors.grey,
-                                  ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      MaterialButton(
-                        padding: const EdgeInsets.only(right: 29.0),
-                        minWidth: 40,
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/intake');
-                          // setState(() {
-                          //   currentTab = 2;
-                          // });
-                        },
-                        child: const Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.water,
-                              color: Colors.blue,
-                              // color: currentTab == 2 ? Colors.blue: Colors.grey,
-                            ),
-                            Text(
-                              'Intake',
-                              style: TextStyle(
-                                  // color: currentTab == 2 ? Colors.blue : Colors.grey,
-                                  ),
-                            )
-                          ],
-                        ),
-                      ),
-                      MaterialButton(
-                        minWidth: 40,
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/intake');
-                          // setState(() {
-                          //   currentTab = 3;
-                          // });
-                        },
-                        child: const Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.water,
-                              color: Colors.blue,
-                              // color: currentTab == 3 ? Colors.blue: Colors.grey,
-                            ),
-                            Text(
-                              'Intake',
-                              style: TextStyle(
-                                  // color: currentTab == 3 ? Colors.blue : Colors.grey,
-                                  ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ],
-                  )
-                ],
-              )),
+          size: 28,
         ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      bottomNavigationBar: BottomAppBar(
+        color: Colors.white,
+        shape: const CircularNotchedRectangle(),
+        notchMargin: 8,
+        // ignore: sized_box_for_whitespace
+        child: Container(
+            height: 60,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    MaterialButton(
+                      padding: const EdgeInsets.only(right: 7.0),
+                      minWidth: 40,
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/dashboard');
+                        setState(() {
+                          currentTab = 0;
+                        });
+                      },
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.dashboard,
+                            color: currentTab == 0 ? Colors.blue : Colors.grey,
+                          ),
+                          Text(
+                            'Dashboard',
+                            style: TextStyle(
+                              color:
+                                  currentTab == 0 ? Colors.blue : Colors.grey,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    MaterialButton(
+                      minWidth: 40,
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/statistics');
+                        setState(() {
+                          currentTab = 1;
+                        });
+                      },
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.pie_chart,
+                            color: currentTab == 1 ? Colors.blue : Colors.grey,
+                          ),
+                          Text(
+                            'Statistics',
+                            style: TextStyle(
+                              color:
+                                  currentTab == 1 ? Colors.blue : Colors.grey,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    MaterialButton(
+                      padding: const EdgeInsets.only(right: 29.0),
+                      minWidth: 40,
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/intake');
+                        // setState(() {
+                        //   currentTab = 2;
+                        // });
+                      },
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.water,
+                            color: currentTab == 2 ? Colors.blue : Colors.grey,
+                          ),
+                          Text(
+                            'Intake',
+                            style: TextStyle(
+                              color:
+                                  currentTab == 2 ? Colors.blue : Colors.grey,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    MaterialButton(
+                      minWidth: 40,
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/intake');
+                        setState(() {
+                          currentTab = 3;
+                        });
+                      },
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.water,
+                            color: currentTab == 3 ? Colors.blue : Colors.grey,
+                          ),
+                          Text(
+                            'Intake',
+                            style: TextStyle(
+                              color:
+                                  currentTab == 3 ? Colors.blue : Colors.grey,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            )),
       ),
     );
   }
@@ -226,8 +221,9 @@ class _DashboardContentState extends State<DashboardContent> {
               'Today\n16 Dec 2023',
               textAlign: TextAlign.center,
               style: TextStyle(
+                color: Color.fromARGB(255, 79, 79, 79),
                 fontFamily: 'Montserrat',
-                fontSize: 22,
+                fontSize: 14,
               ),
             ),
             const SizedBox(height: 30),
@@ -240,67 +236,139 @@ class _DashboardContentState extends State<DashboardContent> {
               circularStrokeCap: CircularStrokeCap.round,
               center: const Text(
                 '40%',
-                style: TextStyle(fontSize: 26, fontFamily: 'Montserrat'),
+                style: TextStyle(fontSize: 28, fontFamily: 'Montserrat'),
               ),
             ),
-            const SizedBox(height: 30),
+            const SizedBox(height: 45),
             const Divider(
               color: Color.fromARGB(255, 197, 205, 208),
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                ToggleButtons(
-                  isSelected: [isSterilization],
-                  onPressed: (int index) {
-                    setState(() {
-                      isSterilization = !isSterilization;
-                    });
-                  },
-                  color: Colors.black, // Text color when not pressed
-                  selectedColor: Colors.white, // Text color when pressed
-                  fillColor: isSterilization
-                      ? Colors.blue
-                      : const Color.fromARGB(255, 17, 98, 164),
-                  borderColor: Colors.blue,
-                  borderRadius: BorderRadius.circular(8),
-                  children: const [
-                    Padding(
-                      padding: EdgeInsets.all(20.0), // Set your desired padding
-                      child: Text(
-                        'Enable\nSterilization',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontFamily: 'Open Sans', fontSize: 14),
+              children: [
+                IntrinsicHeight(
+                  child: Container(
+                    height: 120,
+                    margin: const EdgeInsets.all(6.0),
+                    padding: const EdgeInsets.all(16.0),
+                    decoration: BoxDecoration(
+                      color: Colors.blue,
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    child: const Text(
+                      'Days Streak',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 17.0,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                  ],
+                  ),
                 ),
-                const Spacer(),
-                ToggleButtons(
-                  isSelected: [isHeating],
-                  onPressed: (int index) {
-                    setState(() {
-                      isHeating = !isHeating;
-                    });
-                  },
-                  color: Colors.black, // Text color when not pressed
-                  selectedColor: Colors.white, // Text color when pressed
-                  fillColor: isHeating
-                      ? Colors.blue
-                      : const Color.fromARGB(255, 17, 98, 164),
-                  borderColor: Colors.blue,
-                  borderRadius: BorderRadius.circular(8),
-                  children: const [
-                    Padding(
-                      padding: EdgeInsets.all(20.0), // Set your desired padding
-                      child: Text(
-                        'Enable\nHeating',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontFamily: 'Open Sans', fontSize: 14),
+                IntrinsicHeight(
+                  child: Container(
+                    height: 120,
+                    margin: const EdgeInsets.all(6.0),
+                    padding: const EdgeInsets.all(16.0),
+                    decoration: BoxDecoration(
+                      color: Colors.blue,
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    child: const Text(
+                      'Day Goal',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 17.0,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                  ],
+                  ),
+                ),
+                IntrinsicHeight(
+                  child: Container(
+                    height: 120,
+                    margin: const EdgeInsets.all(6.0),
+                    padding: const EdgeInsets.all(16.0),
+                    decoration: BoxDecoration(
+                      color: Colors.blue,
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    child: const Text(
+                      'Bottles to go',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 17.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Column(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      const Text(
+                        'Enable sterilization',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontFamily: 'Montserrat',
+                          fontSize: 18,
+                        ),
+                      ),
+                      Switch(
+                        value: isSterilization,
+                        onChanged: (value) {
+                          setState(() {
+                            isSterilization = value;
+                          });
+                        },
+                        activeColor: Colors.blue, // Color when the switch is ON
+                        activeTrackColor: const Color.fromARGB(255, 147, 191,
+                            228), // Track color when the switch is ON
+                        inactiveTrackColor: const Color.fromARGB(
+                            255, 218, 218, 218), // Color when the switch is OFF
+                        inactiveThumbColor: const Color.fromARGB(255, 174, 174,
+                            174), // Track color when the switch is OFF),
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      const Text(
+                        'Enable Heating',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontFamily: 'Montserrat',
+                          fontSize: 18,
+                        ),
+                      ),
+                      Switch(
+                        value: isHeating,
+                        onChanged: (value) {
+                          setState(() {
+                            isHeating = value;
+                          });
+                        },
+                        activeColor: Colors.blue, // Color when the switch is ON
+                        activeTrackColor: const Color.fromARGB(255, 147, 191,
+                            228), // Track color when the switch is ON
+                        inactiveTrackColor: const Color.fromARGB(
+                            255, 218, 218, 218), // Color when the switch is OFF
+                        inactiveThumbColor: const Color.fromARGB(255, 174, 174,
+                            174), // Track color when the switch is OFF),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             )
