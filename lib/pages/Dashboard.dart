@@ -301,7 +301,7 @@ class _DashboardContentState extends State<DashboardContent> {
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                     child: Text(
-                      'Bottles to go\n${result[1]}',
+                      'Bottles\nto go\n${result[1]}',
                       textAlign: TextAlign.center,
                       style: const TextStyle(
                         color: Colors.white,
