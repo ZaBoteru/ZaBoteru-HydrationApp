@@ -1,3 +1,8 @@
+import 'dart:convert';
+import 'dart:typed_data';
+import 'dart:async';
+import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
+
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:zaboteru/pages/WaterIntake.dart';
@@ -209,6 +214,7 @@ class _DashboardContentState extends State<DashboardContent> {
   bool isSterilization = false;
   bool isHeating = false;
   DateTime today = DateTime.now();
+  late BluetoothConnection connection;
 
   @override
   Widget build(BuildContext context) {
@@ -281,7 +287,7 @@ class _DashboardContentState extends State<DashboardContent> {
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                     child: Text(
-                      'Day Goal\n${result[0]}',
+                      'Day Goal\n${result[0].toStringAsPrecision(3)}',
                       textAlign: TextAlign.center,
                       style: const TextStyle(
                         color: Colors.white,
@@ -301,7 +307,7 @@ class _DashboardContentState extends State<DashboardContent> {
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                     child: Text(
-                      'Bottles\nto go\n${result[1]}',
+                      'Bottles\nto go\n${result[1].toStringAsPrecision(3)}',
                       textAlign: TextAlign.center,
                       style: const TextStyle(
                         color: Colors.white,

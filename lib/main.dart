@@ -64,18 +64,26 @@ class ZaBoteru extends StatelessWidget {
 ######################### TO-DO-LIST #########################
 ##############################################################
 Mandatory:
-- Backend file for the water intake goal calculation
+- Backend file for the water intake goal calculation [modify: enhance]
 - Based on the backend, there will be stateful text in multiple places such
   as the stats in the dashboard (not sure if there will be other pages that
-  require this)
-- Add the notification feature
-- Add the Bluetooth feature
+  require this).
+- Add the notification feature [fix]
+- Add the Bluetooth feature [fix]
 - Make the statistics page
 
-Details:
+Consider:
+- Edit the settings page to be able to add the preferences of the user.
+- Print the temperature and rethink about the temperature limitation
+- Local database or firebase
+- Does the bottle need refilling?
+- Re-think about the sensors and the buttons' events
+
+UI Details:
 - Change the last icon of it (double intake page) in the navigation bar
 - BONUS: make the application responsive to landscape mode and maintainable
-  on any screen size
+  on any screen size [it is a must do at least on the device we will present
+  with it]
 - BONUS: edit all the style
 ##############################################################
 ###############################################################

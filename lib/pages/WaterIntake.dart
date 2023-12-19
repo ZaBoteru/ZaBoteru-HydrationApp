@@ -49,7 +49,7 @@ class _WaterIntakeState extends State<WaterIntake> {
         backgroundColor: Colors.blue,
         iconTheme: const IconThemeData(color: Colors.white),
         title: const Text(
-          'How much you need',
+          'Find out your goal',
           style: TextStyle(
               color: Colors.white,
               fontFamily: 'Montserrat',
@@ -143,8 +143,6 @@ class _WaterIntakeState extends State<WaterIntake> {
       ),
       bottomNavigationBar: BottomAppBar(
         color: Colors.white,
-        shape: const CircularNotchedRectangle(),
-        notchMargin: 8,
         // ignore: sized_box_for_whitespace
         child: Container(
           width: MediaQuery.of(context).size.width,
@@ -154,7 +152,6 @@ class _WaterIntakeState extends State<WaterIntake> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               MaterialButton(
-                minWidth: 40, // Adjust the width as needed
                 onPressed: () {
                   Navigator.pushNamed(context, '/dashboard');
                   setState(() {
@@ -178,7 +175,6 @@ class _WaterIntakeState extends State<WaterIntake> {
                 ),
               ),
               MaterialButton(
-                minWidth: 40, // Adjust the width as needed
                 onPressed: () {
                   Navigator.pushNamed(context, '/statistics');
                   setState(() {
@@ -202,7 +198,6 @@ class _WaterIntakeState extends State<WaterIntake> {
                 ),
               ),
               MaterialButton(
-                minWidth: 40, // Adjust the width as needed
                 onPressed: () {
                   Navigator.pushNamed(context, '/intake');
                   setState(() {
@@ -226,7 +221,6 @@ class _WaterIntakeState extends State<WaterIntake> {
                 ),
               ),
               MaterialButton(
-                minWidth: 40, // Adjust the width as needed
                 onPressed: () {
                   Navigator.pushNamed(context, '/intake');
                   setState(() {
