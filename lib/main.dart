@@ -13,13 +13,13 @@ import 'package:zaboteru/providers/result_provider.dart';
 
 void main() {
   GoogleFonts.config.allowRuntimeFetching = false;
-  runApp(const ZaBoteru());
-  // runApp(DevicePreview(
-  //   enabled: !kReleaseMode,
-  //   builder: (BuildContext context) {
-  //     return const ZaBoteru();
-  //   },
-  // ));
+  // runApp(const ZaBoteru());
+  runApp(DevicePreview(
+    enabled: !kReleaseMode,
+    builder: (BuildContext context) {
+      return const ZaBoteru();
+    },
+  ));
 }
 
 class ZaBoteru extends StatelessWidget {
@@ -103,11 +103,8 @@ Consider:
 - Re-think about the sensors and the buttons' events
 
 UI Details:
-- Change the last icon of it (double intake page) in the navigation bar
-- BONUS: make the application responsive to landscape mode and maintainable
-  on any screen size [it is a must do at least on the device we will present
-  with it]
+- BONUS: make the application responsive to landscape mode
 - BONUS: edit all the style
-##############################################################
+###############################################################
 ###############################################################
 */

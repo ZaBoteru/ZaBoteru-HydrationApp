@@ -214,6 +214,9 @@ class _DashboardContentState extends State<DashboardContent> {
                         ],
                       ),
                     ),
+                    SizedBox(
+                      height: 70.h,
+                    ),
                   ],
                 )
               ]),
