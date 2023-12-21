@@ -36,180 +36,188 @@ class _DashboardContentState extends State<DashboardContent> {
     String formattedDate = '${today.day} ${months[today.month]} ${today.year}';
     return ScreenUtilInit(
       child: Scaffold(
-          body: Center(
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              SizedBox(height: 20.h),
-              Text(
-                'Today\n$formattedDate',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: const Color.fromARGB(255, 79, 79, 79),
-                  fontSize: 14.sp,
-                ),
-              ),
-              SizedBox(height: 30.h),
-              CircularPercentIndicator(
-                radius: 100.w,
-                lineWidth: 14.w,
-                percent: 0.4,
-                progressColor: Colors.blue,
-                backgroundColor: const Color.fromARGB(255, 197, 205, 208),
-                circularStrokeCap: CircularStrokeCap.round,
-                center: Text(
-                  '40%',
-                  style: TextStyle(fontSize: 28.sp),
-                ),
-              ),
-              SizedBox(height: 30.h),
-              const Divider(
-                color: Color.fromARGB(255, 197, 205, 208),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 8.0), // Adjust the padding as needed
-                child: SizedBox(
-                  height:
-                      120, // Set a fixed height or use MediaQuery.of(context).size.height
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.blue,
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                          child: Center(
-                            child: Text(
-                              'Days Streak\n',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 17.sp,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: 8.0.w), // Add space between containers
-                      Expanded(
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.blue,
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                          child: Center(
-                            child: Text(
-                              'Day Goal\n${context.watch<ResultProvider>().result[0].toStringAsPrecision(3)}',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 17.0.sp,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: 8.0.w), // Add space between containers
-                      Expanded(
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.blue,
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                          child: Center(
-                            child: Text(
-                              'Bottles to go\n${context.watch<ResultProvider>().result[1].toStringAsPrecision(3)}',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 17.0.sp,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
+          body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                SizedBox(height: 20.h),
+                Text(
+                  'Today\n$formattedDate',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: const Color.fromARGB(255, 79, 79, 79),
+                    fontSize: 14.sp,
                   ),
                 ),
-              ),
-              SizedBox(
-                height: 8.h,
-              ),
-              Column(
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                SizedBox(height: 30.h),
+                CircularPercentIndicator(
+                  radius: 100.w,
+                  lineWidth: 14.w,
+                  percent: 0.4,
+                  progressColor: Colors.blue,
+                  backgroundColor: const Color.fromARGB(255, 197, 205, 208),
+                  circularStrokeCap: CircularStrokeCap.round,
+                  center: Text(
+                    '40%',
+                    style: TextStyle(fontSize: 28.sp),
+                  ),
+                ),
+                SizedBox(height: 30.h),
+                const Divider(
+                  color: Color.fromARGB(255, 197, 205, 208),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 8.0), // Adjust the padding as needed
+                  child: SizedBox(
+                    height:
+                        120, // Set a fixed height or use MediaQuery.of(context).size.height
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        const Text(
-                          'Enable Sterilization',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 18,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.blue,
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            child: Center(
+                              child: Text(
+                                'Days Streak\n',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 17.sp,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
                           ),
                         ),
-                        Switch(
-                          value: isSterilization,
-                          onChanged: (value) {
-                            setState(() {
-                              isSterilization = value;
-                            });
-                          },
-                          activeColor:
-                              Colors.blue, // Color when the switch is ON
-                          activeTrackColor: const Color.fromARGB(255, 147, 191,
-                              228), // Track color when the switch is ON
-                          inactiveTrackColor: const Color.fromARGB(255, 218,
-                              218, 218), // Color when the switch is OFF
-                          inactiveThumbColor: const Color.fromARGB(255, 174,
-                              174, 174), // Track color when the switch is OFF),
+                        SizedBox(width: 8.0.w), // Add space between containers
+                        Expanded(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.blue,
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            child: Center(
+                              child: Text(
+                                'Day Goal\n${context.watch<ResultProvider>().result[0].toStringAsPrecision(3)}',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 17.0.sp,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 8.0.w), // Add space between containers
+                        Expanded(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.blue,
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            child: Center(
+                              child: Text(
+                                'Bottles to go\n${context.watch<ResultProvider>().result[1].toStringAsPrecision(3)}',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 17.0.sp,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
                         ),
                       ],
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        const Text(
-                          'Enable Heating',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 18,
+                ),
+                SizedBox(
+                  height: 8.h,
+                ),
+                Column(
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.only(left: 16.0.w, right: 16.0.w),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Text(
+                            'Enable Sterilization',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 18.sp,
+                            ),
                           ),
-                        ),
-                        Switch(
-                          value: isHeating,
-                          onChanged: (value) {
-                            setState(() {
-                              isHeating = value;
-                            });
-                          },
-                          activeColor:
-                              Colors.blue, // Color when the switch is ON
-                          activeTrackColor: const Color.fromARGB(255, 147, 191,
-                              228), // Track color when the switch is ON
-                          inactiveTrackColor: const Color.fromARGB(255, 218,
-                              218, 218), // Color when the switch is OFF
-                          inactiveThumbColor: const Color.fromARGB(255, 174,
-                              174, 174), // Track color when the switch is OFF),
-                        ),
-                      ],
+                          Switch(
+                            value: isSterilization,
+                            onChanged: (value) {
+                              setState(() {
+                                isSterilization = value;
+                              });
+                            },
+                            activeColor:
+                                Colors.blue, // Color when the switch is ON
+                            activeTrackColor: const Color.fromARGB(255, 147,
+                                191, 228), // Track color when the switch is ON
+                            inactiveTrackColor: const Color.fromARGB(255, 218,
+                                218, 218), // Color when the switch is OFF
+                            inactiveThumbColor: const Color.fromARGB(
+                                255,
+                                174,
+                                174,
+                                174), // Track color when the switch is OFF),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
-              )
-            ]),
+                    Padding(
+                      padding: EdgeInsets.only(left: 16.0.w, right: 16.0.w),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Text(
+                            'Enable Heating',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 18.sp,
+                            ),
+                          ),
+                          Switch(
+                            value: isHeating,
+                            onChanged: (value) {
+                              setState(() {
+                                isHeating = value;
+                              });
+                            },
+                            activeColor:
+                                Colors.blue, // Color when the switch is ON
+                            activeTrackColor: const Color.fromARGB(255, 147,
+                                191, 228), // Track color when the switch is ON
+                            inactiveTrackColor: const Color.fromARGB(255, 218,
+                                218, 218), // Color when the switch is OFF
+                            inactiveThumbColor: const Color.fromARGB(
+                                255,
+                                174,
+                                174,
+                                174), // Track color when the switch is OFF),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                )
+              ]),
+        ),
       )),
     );
   }
