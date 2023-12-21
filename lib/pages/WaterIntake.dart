@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+import 'package:zaboteru/providers/result_provider.dart';
 
-List<double> result = [0, 0];
+List<double> waterIntakeResult = [0, 0];
 
 class WaterIntake extends StatefulWidget {
   const WaterIntake({super.key});
@@ -19,11 +22,9 @@ class _WaterIntakeState extends State<WaterIntake> {
   int age = 0;
   int glassesOfWater = 0;
 
-  int currentTab = 2;
-
   final List<String> countries = [
+    'Egypt',
     'Saudi Arabia',
-    'United Arab Emirates',
     'Qatar',
     'Kuwait',
     'Bahrain',
@@ -31,8 +32,6 @@ class _WaterIntakeState extends State<WaterIntake> {
     'Jordan',
     'Lebanon',
     'Iraq',
-    'Egypt'
-    // Add more countries as needed
   ];
 
   final List<String> activities = [
@@ -44,206 +43,91 @@ class _WaterIntakeState extends State<WaterIntake> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.blue,
-        iconTheme: const IconThemeData(color: Colors.white),
-        title: const Text(
-          'Find out your goal',
-          style: TextStyle(
-              color: Colors.white,
-              fontFamily: 'Montserrat',
-              fontSize: 24.0,
-              fontStyle: FontStyle.italic,
-              fontWeight: FontWeight.bold),
-        ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  const Row(
-                    children: [
-                      Text(
-                        'Gender',
-                        style: TextStyle(
-                            fontSize: 18,
-                            color: Color.fromARGB(255, 22, 22, 22)),
-                      )
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      _buildCheckbox('Male', 'male'),
-                      _buildCheckbox('Female', 'female'),
-                    ],
-                  ),
-                ],
-              ),
-              _buildTextInput('Weight (kg)', TextInputType.number, (value) {
-                setState(() {
-                  weight = double.tryParse(value) ?? 0.0;
-                });
-              }),
-              _buildTextInput('Height (cm)', TextInputType.number, (value) {
-                setState(() {
-                  height = double.tryParse(value) ?? 0.0;
-                });
-              }),
-              _buildDropdown('Country', countries, (value) {
-                setState(() {
-                  selectedCountry = value;
-                });
-              }),
-              _buildTextInput('Age (years)', TextInputType.number, (value) {
-                setState(() {
-                  age = int.tryParse(value) ?? 0;
-                });
-              }),
-              _buildDropdown('Physical Activity', activities, (value) {
-                setState(() {
-                  selectedActivity = value;
-                });
-              }),
-              _buildTextInput('Glasses of Water (250 ml)', TextInputType.number,
-                  (value) {
-                setState(() {
-                  glassesOfWater = int.tryParse(value) ?? 0;
-                });
-              }),
-              const SizedBox(height: 16.0),
-              ElevatedButton(
-                onPressed: () {
-                  result = calculateWaterIntake(
-                      selectedGender,
-                      selectedActivity,
-                      weight = 0.0,
-                      height,
-                      selectedCountry,
-                      age,
-                      glassesOfWater);
-                },
-                child: const Text(
-                  'Submit',
-                  style: TextStyle(
-                    fontFamily: 'Montserrat',
-                    fontSize: 16.0,
+    return ScreenUtilInit(
+      child: Scaffold(
+        body: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Row(
+                      children: [
+                        Text(
+                          'Gender',
+                          style: TextStyle(
+                              fontSize: 18.sp,
+                              color: const Color.fromARGB(255, 22, 22, 22)),
+                        )
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        _buildCheckbox('Male', 'male'),
+                        _buildCheckbox('Female', 'female'),
+                      ],
+                    ),
+                  ],
+                ),
+                _buildTextInput('Weight (kg)', TextInputType.number, (value) {
+                  setState(() {
+                    weight = double.tryParse(value) ?? 0.0;
+                  });
+                }),
+                _buildTextInput('Height (cm)', TextInputType.number, (value) {
+                  setState(() {
+                    height = double.tryParse(value) ?? 0.0;
+                  });
+                }),
+                _buildDropdown('Country', countries, (value) {
+                  setState(() {
+                    selectedCountry = value;
+                  });
+                }),
+                _buildTextInput('Age (years)', TextInputType.number, (value) {
+                  setState(() {
+                    age = int.tryParse(value) ?? 0;
+                  });
+                }),
+                _buildDropdown('Physical Activity', activities, (value) {
+                  setState(() {
+                    selectedActivity = value;
+                  });
+                }),
+                _buildTextInput(
+                    'Glasses of Water (250 ml)', TextInputType.number, (value) {
+                  setState(() {
+                    glassesOfWater = int.tryParse(value) ?? 0;
+                  });
+                }),
+                SizedBox(height: 16.0.h),
+                ElevatedButton(
+                  onPressed: () {
+                    waterIntakeResult = calculateWaterIntake(
+                        selectedGender,
+                        selectedActivity,
+                        weight,
+                        height,
+                        selectedCountry,
+                        age,
+                        glassesOfWater);
+                    context
+                        .read<ResultProvider>()
+                        .changeresult(newResult: waterIntakeResult);
+                  },
+                  child: Text(
+                    'Submit',
+                    style: TextStyle(
+                      fontSize: 16.0.sp,
+                    ),
                   ),
                 ),
-              ),
-            ],
-          ),
-        ),
-      ),
-      bottomNavigationBar: BottomAppBar(
-        color: Colors.white,
-        // ignore: sized_box_for_whitespace
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          height: 60,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              MaterialButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/dashboard');
-                  setState(() {
-                    currentTab = 0;
-                  });
-                },
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.dashboard,
-                      color: currentTab == 0 ? Colors.blue : Colors.grey,
-                    ),
-                    Text(
-                      'Dashboard',
-                      style: TextStyle(
-                        color: currentTab == 0 ? Colors.blue : Colors.grey,
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              MaterialButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/statistics');
-                  setState(() {
-                    currentTab = 1;
-                  });
-                },
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.pie_chart,
-                      color: currentTab == 1 ? Colors.blue : Colors.grey,
-                    ),
-                    Text(
-                      'Statistics',
-                      style: TextStyle(
-                        color: currentTab == 1 ? Colors.blue : Colors.grey,
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              MaterialButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/intake');
-                  setState(() {
-                    currentTab = 2;
-                  });
-                },
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.water,
-                      color: currentTab == 2 ? Colors.blue : Colors.grey,
-                    ),
-                    Text(
-                      'Intake',
-                      style: TextStyle(
-                        color: currentTab == 2 ? Colors.blue : Colors.grey,
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              MaterialButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/intake');
-                  setState(() {
-                    currentTab = 3;
-                  });
-                },
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.water,
-                      color: currentTab == 3 ? Colors.blue : Colors.grey,
-                    ),
-                    Text(
-                      'Intake',
-                      style: TextStyle(
-                        color: currentTab == 3 ? Colors.blue : Colors.grey,
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -269,7 +153,7 @@ class _WaterIntakeState extends State<WaterIntake> {
   Widget _buildTextInput(
       String label, TextInputType keyboardType, Function(String) onChanged) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      padding: EdgeInsets.symmetric(vertical: 8.0.h),
       child: TextField(
         keyboardType: keyboardType,
         onChanged: onChanged,
@@ -283,7 +167,7 @@ class _WaterIntakeState extends State<WaterIntake> {
   Widget _buildDropdown(
       String label, List<String> options, void Function(String?)? onChanged) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      padding: EdgeInsets.symmetric(vertical: 8.0.h),
       child: DropdownButtonFormField<String>(
         value: options.isNotEmpty ? options.first : null,
         onChanged: onChanged,
@@ -328,5 +212,6 @@ List<double> calculateWaterIntake(String? gender, String? exercise,
 
   totalWaterIntake = baseWaterIntake + activityWaterIntake;
   neededWater = totalWaterIntake - waterGlasses * 0.25;
+
   return [totalWaterIntake, neededWater];
 }

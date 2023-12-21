@@ -1,39 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class NotiPage extends StatelessWidget {
   const NotiPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.blue,
-        title: const Text(
-          'Notifications',
-          style: TextStyle(
-                color: Colors.white,
-                fontFamily: 'Montserrat',
-                fontSize: 24.0,
-              ),
+    return ScreenUtilInit(
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.blue,
+          title: Text(
+            'Notifications',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 24.0.sp,
+              fontStyle: FontStyle.italic,
+            ),
+          ),
+          // Customize the IconTheme for the back button
+          iconTheme: const IconThemeData(color: Colors.white),
         ),
-        // Customize the IconTheme for the back button
-        iconTheme: const IconThemeData(color: Colors.white),
-      ),
-      body: const Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Icon(
-              Icons.notifications,
-              size: 100,
-              color: Colors.blue, // Adjust the color as needed
-            ),
-            SizedBox(height: 20),
-            Text(
-              'This is the notification page!',
-              style: TextStyle(fontSize: 18),
-            ),
-          ],
+        body: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              const Icon(
+                Icons.notifications,
+                size: 100,
+                color: Colors.blue, // Adjust the color as needed
+              ),
+              SizedBox(height: 20.h),
+              Text(
+                'No notifications for now!',
+                style: TextStyle(fontSize: 18.sp),
+              ),
+            ],
+          ),
         ),
       ),
     );
