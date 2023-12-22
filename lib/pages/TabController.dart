@@ -31,7 +31,7 @@ class TabController extends StatelessWidget {
                 icon: const Icon(
                   Icons.notifications,
                   color: Colors.white,
-                  size: 28,
+                  size: 26,
                 ),
                 onPressed: () {
                   // Navigate to the 'notification' page here
@@ -42,7 +42,7 @@ class TabController extends StatelessWidget {
                 icon: const Icon(
                   Icons.settings,
                   color: Colors.white,
-                  size: 28,
+                  size: 26,
                 ),
                 onPressed: () {
                   // Navigate to the 'settings' page here
@@ -53,15 +53,27 @@ class TabController extends StatelessWidget {
             bottom: const TabBar(
               tabs: [
                 CustomTab(
-                  icon: Icon(Icons.home, color: Colors.white),
+                  icon: Icon(
+                    Icons.home,
+                    color: Colors.white,
+                    size: 20,
+                  ),
                   text: 'Home',
                 ),
                 CustomTab(
-                  icon: Icon(Icons.pie_chart, color: Colors.white),
+                  icon: Icon(
+                    Icons.show_chart_outlined,
+                    color: Colors.white,
+                    size: 20,
+                  ),
                   text: 'Statistics',
                 ),
                 CustomTab(
-                  icon: Icon(Icons.water, color: Colors.white),
+                  icon: Icon(
+                    Icons.water,
+                    color: Colors.white,
+                    size: 20,
+                  ),
                   text: 'Intake',
                 ),
               ],

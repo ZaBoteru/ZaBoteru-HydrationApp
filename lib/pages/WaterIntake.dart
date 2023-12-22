@@ -55,11 +55,12 @@ class _WaterIntakeState extends State<WaterIntake> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
                           'Gender',
                           style: TextStyle(
-                              fontSize: 18.sp,
+                              fontSize: 16.sp,
                               color: const Color.fromARGB(255, 22, 22, 22)),
                         )
                       ],
@@ -88,7 +89,7 @@ class _WaterIntakeState extends State<WaterIntake> {
                     selectedCountry = value;
                   });
                 }),
-                _buildTextInput('Age (years)', TextInputType.number, (value) {
+                _buildTextInput('Age', TextInputType.number, (value) {
                   setState(() {
                     age = int.tryParse(value) ?? 0;
                   });
@@ -99,7 +100,7 @@ class _WaterIntakeState extends State<WaterIntake> {
                   });
                 }),
                 _buildTextInput(
-                    'Glasses of Water (250 ml)', TextInputType.number, (value) {
+                    'Glasses of Water (250ml)', TextInputType.number, (value) {
                   setState(() {
                     glassesOfWater = int.tryParse(value) ?? 0;
                   });
@@ -126,6 +127,9 @@ class _WaterIntakeState extends State<WaterIntake> {
                     ),
                   ),
                 ),
+                SizedBox(
+                  height: 70.h,
+                )
               ],
             ),
           ),

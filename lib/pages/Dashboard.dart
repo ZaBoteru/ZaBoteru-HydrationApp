@@ -84,16 +84,20 @@ class _DashboardContentState extends State<DashboardContent> {
                               color: Colors.blue,
                               borderRadius: BorderRadius.circular(10.0),
                             ),
-                            child: Center(
-                              child: Text(
-                                'Days Streak\n',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 17.sp,
-                                  fontWeight: FontWeight.bold,
+                            child: Padding(
+                              padding: const EdgeInsets.all(4),
+                              child: Column(children: [
+                                Text(
+                                  'Days Streak',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color:
+                                        const Color.fromARGB(255, 12, 57, 93),
+                                    fontSize: 16.0.sp,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
-                              ),
+                              ]),
                             ),
                           ),
                         ),
@@ -104,16 +108,34 @@ class _DashboardContentState extends State<DashboardContent> {
                               color: Colors.blue,
                               borderRadius: BorderRadius.circular(10.0),
                             ),
-                            child: Center(
-                              child: Text(
-                                'Day Goal\n${context.watch<ResultProvider>().result[0].toStringAsPrecision(3)}',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 17.0.sp,
-                                  fontWeight: FontWeight.bold,
+                            child: Padding(
+                              padding: const EdgeInsets.all(4),
+                              child: Column(children: [
+                                Text(
+                                  'Day Goal',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color:
+                                        const Color.fromARGB(255, 12, 57, 93),
+                                    fontSize: 16.0.sp,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
-                              ),
+                                SizedBox(
+                                  height: 8.h,
+                                ),
+                                Text(
+                                  context
+                                      .watch<ResultProvider>()
+                                      .result[0]
+                                      .toStringAsPrecision(3),
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 23.0.sp,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                )
+                              ]),
                             ),
                           ),
                         ),
@@ -124,16 +146,34 @@ class _DashboardContentState extends State<DashboardContent> {
                               color: Colors.blue,
                               borderRadius: BorderRadius.circular(10.0),
                             ),
-                            child: Center(
-                              child: Text(
-                                'Bottles to go\n${context.watch<ResultProvider>().result[1].toStringAsPrecision(3)}',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 17.0.sp,
-                                  fontWeight: FontWeight.bold,
+                            child: Padding(
+                              padding: const EdgeInsets.all(4),
+                              child: Column(children: [
+                                Text(
+                                  'Bottles to go',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color:
+                                        const Color.fromARGB(255, 12, 57, 93),
+                                    fontSize: 16.0.sp,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
-                              ),
+                                SizedBox(
+                                  height: 8.h,
+                                ),
+                                Text(
+                                  context
+                                      .watch<ResultProvider>()
+                                      .result[1]
+                                      .toStringAsPrecision(3),
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 23.0.sp,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                )
+                              ]),
                             ),
                           ),
                         ),
