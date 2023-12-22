@@ -28,10 +28,10 @@ class TabController extends StatelessWidget {
             ),
             actions: <Widget>[
               IconButton(
-                icon: const Icon(
+                icon: Icon(
                   Icons.notifications,
                   color: Colors.white,
-                  size: 26,
+                  size: 26.sp,
                 ),
                 onPressed: () {
                   // Navigate to the 'notification' page here
@@ -39,10 +39,10 @@ class TabController extends StatelessWidget {
                 },
               ),
               IconButton(
-                icon: const Icon(
+                icon: Icon(
                   Icons.settings,
                   color: Colors.white,
-                  size: 26,
+                  size: 26.sp,
                 ),
                 onPressed: () {
                   // Navigate to the 'settings' page here
@@ -50,13 +50,13 @@ class TabController extends StatelessWidget {
                 },
               ),
             ],
-            bottom: const TabBar(
+            bottom: TabBar(
               tabs: [
                 CustomTab(
                   icon: Icon(
                     Icons.home,
                     color: Colors.white,
-                    size: 20,
+                    size: 20.sp,
                   ),
                   text: 'Home',
                 ),
@@ -64,7 +64,7 @@ class TabController extends StatelessWidget {
                   icon: Icon(
                     Icons.show_chart_outlined,
                     color: Colors.white,
-                    size: 20,
+                    size: 20.sp,
                   ),
                   text: 'Statistics',
                 ),
@@ -72,7 +72,7 @@ class TabController extends StatelessWidget {
                   icon: Icon(
                     Icons.water,
                     color: Colors.white,
-                    size: 20,
+                    size: 20.sp,
                   ),
                   text: 'Intake',
                 ),
@@ -90,10 +90,10 @@ class TabController extends StatelessWidget {
             onPressed: () {},
             backgroundColor: Colors.blue,
             shape: const CircleBorder(),
-            child: const Icon(
+            child: Icon(
               Icons.bluetooth,
               color: Colors.white,
-              size: 28,
+              size: 28.sp,
             ),
           ),
           floatingActionButtonLocation:
@@ -116,13 +116,14 @@ class CustomTab extends StatelessWidget {
       designSize: const Size(360, 640),
       child: Tab(
         icon: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             icon,
             SizedBox(width: 5.w), // Add some space between icon and text
             Text(
               text,
-              style: const TextStyle(color: Colors.white),
+              style: TextStyle(color: Colors.white, fontSize: 13.sp),
             ),
           ],
         ),
