@@ -13,13 +13,13 @@ import 'package:zaboteru/providers/result_provider.dart';
 
 void main() {
   GoogleFonts.config.allowRuntimeFetching = false;
-  // runApp(const ZaBoteru());
-  runApp(DevicePreview(
-    enabled: !kReleaseMode,
-    builder: (BuildContext context) {
-      return const ZaBoteru();
-    },
-  ));
+  runApp(const ZaBoteru());
+  // runApp(DevicePreview(
+  //   enabled: !kReleaseMode,
+  //   builder: (BuildContext context) {
+  //     return const ZaBoteru();
+  //   },
+  // ));
 }
 
 class ZaBoteru extends StatelessWidget {
