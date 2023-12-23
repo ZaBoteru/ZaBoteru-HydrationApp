@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
@@ -14,6 +15,7 @@ class DashboardContent extends StatefulWidget {
 class _DashboardContentState extends State<DashboardContent> {
   bool isSterilization = false;
   bool isHeating = false;
+  bool isVisible = false;
   DateTime today = DateTime.now();
 
   Map<int, String> months = {
@@ -30,6 +32,48 @@ class _DashboardContentState extends State<DashboardContent> {
     11: 'Nov',
     12: 'Dec',
   };
+
+  Timer? _sterilizationTimer;
+  bool isSterilizationSwitchEnabled = true;
+  int sterilizationRemainingTime = 10;
+
+  @override
+  void dispose() {
+    _sterilizationTimer?.cancel();
+    super.dispose();
+  }
+
+  void _startSterilizationTimer() {
+    _sterilizationTimer?.cancel();
+
+    _sterilizationTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      setState(() {
+        sterilizationRemainingTime--;
+      });
+
+      if (sterilizationRemainingTime <= 0) {
+        _sterilizationTimer?.cancel();
+        setState(() {
+          isSterilization = false;
+        });
+
+        // Disable the switch for 5 seconds
+        setState(() {
+          isSterilizationSwitchEnabled = false;
+        });
+
+        // Wait for 5 seconds before hiding the message
+        Future.delayed(const Duration(seconds: 5), () {
+          setState(() {
+            isVisible = false;
+            sterilizationRemainingTime =
+                10; // Reset the timer for the next sterilization
+            isSterilizationSwitchEnabled = true;
+          });
+        });
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -202,7 +246,17 @@ class _DashboardContentState extends State<DashboardContent> {
                             value: isSterilization,
                             onChanged: (value) {
                               setState(() {
-                                isSterilization = value;
+                                // Allow switch change only if isSwitchEnabled is true
+                                if (isSterilizationSwitchEnabled) {
+                                  isVisible = true;
+                                  isSterilization = value;
+                                  if (value) {
+                                    _startSterilizationTimer();
+                                  } else {
+                                    // If the switch is turned off, cancel the timer
+                                    _sterilizationTimer?.cancel();
+                                  }
+                                }
                               });
                             },
                             activeColor:
@@ -220,6 +274,31 @@ class _DashboardContentState extends State<DashboardContent> {
                         ],
                       ),
                     ),
+                    Visibility(
+                        visible: isVisible,
+                        child: SizedBox(
+                          height: 30.h,
+                          child: Padding(
+                            padding:
+                                EdgeInsets.only(left: 16.0.w, right: 16.0.w),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Flexible(
+                                  child: Text(
+                                    sterilizationRemainingTime > 0
+                                        ? 'Time Remaining till the end of Sterilization\n$sterilizationRemainingTime seconds'
+                                        : 'Done Sterilization!',
+                                    style: const TextStyle(
+                                        color: Color.fromARGB(255, 33, 33, 34)),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        )),
                     Padding(
                       padding: EdgeInsets.only(left: 16.0.w, right: 16.0.w),
                       child: Row(

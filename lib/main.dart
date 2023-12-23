@@ -13,13 +13,13 @@ import 'package:zaboteru/providers/result_provider.dart';
 
 void main() {
   GoogleFonts.config.allowRuntimeFetching = false;
-  runApp(const ZaBoteru());
-  // runApp(DevicePreview(
-  //   enabled: !kReleaseMode,
-  //   builder: (BuildContext context) {
-  //     return const ZaBoteru();
-  //   },
-  // ));
+  // runApp(const ZaBoteru());
+  runApp(DevicePreview(
+    enabled: !kReleaseMode,
+    builder: (BuildContext context) {
+      return const ZaBoteru();
+    },
+  ));
 }
 
 class ZaBoteru extends StatelessWidget {
@@ -69,7 +69,7 @@ class ZaBoteru extends StatelessWidget {
               ],
             ),
             nextScreen: const custom.TabController(),
-            duration: 3000,
+            duration: 3100,
             splashTransition: SplashTransition.fadeTransition,
             backgroundColor: Colors.white,
             splashIconSize: 400.sp,
