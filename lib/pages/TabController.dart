@@ -14,105 +14,95 @@ class TabController extends StatelessWidget {
       child: ScreenUtilInit(
         designSize: const Size(360, 640),
         child: GestureDetector(
-          behavior: HitTestBehavior
-              .opaque, // This will prevent the screen from resizing
+          behavior: HitTestBehavior.opaque,
           onTap: () {
-            // Handle tap if needed
-            FocusScope.of(context)
-                .requestFocus(FocusNode()); // Dismiss keyboard
+            // Dismiss keyboard if pressed anywhere out of it
+            FocusScope.of(context).requestFocus(FocusNode());
           },
-          child: GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            onTap: () {
-              // Dismiss keyboard if pressed anywhere out of it
-              FocusScope.of(context).requestFocus(FocusNode());
-            },
-            child: Scaffold(
-              appBar: AppBar(
-                automaticallyImplyLeading: false,
-                backgroundColor: Colors.blue,
-                title: Text(
-                  'ZaBoteru',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontStyle: FontStyle.italic,
-                    fontWeight: FontWeight.w700,
-                    fontSize: 26.sp,
-                  ),
-                ),
-                actions: <Widget>[
-                  IconButton(
-                    icon: Icon(
-                      Icons.notifications,
-                      color: Colors.white,
-                      size: 26.sp,
-                    ),
-                    onPressed: () {
-                      // Navigate to the 'notification' page here
-                      Navigator.pushNamed(context, '/notification');
-                    },
-                  ),
-                  IconButton(
-                    icon: Icon(
-                      Icons.settings,
-                      color: Colors.white,
-                      size: 26.sp,
-                    ),
-                    onPressed: () {
-                      // Navigate to the 'settings' page here
-                      Navigator.pushNamed(context, '/settings');
-                    },
-                  ),
-                ],
-                bottom: TabBar(
-                  tabs: [
-                    CustomTab(
-                      icon: Icon(
-                        Icons.home,
-                        color: Colors.white,
-                        size: 20.sp,
-                      ),
-                      text: 'Home',
-                    ),
-                    CustomTab(
-                      icon: Icon(
-                        Icons.show_chart_outlined,
-                        color: Colors.white,
-                        size: 20.sp,
-                      ),
-                      text: 'Statistics',
-                    ),
-                    CustomTab(
-                      icon: Icon(
-                        Icons.water,
-                        color: Colors.white,
-                        size: 20.sp,
-                      ),
-                      text: 'Intake',
-                    ),
-                  ],
-                ),
-              ),
-              body: const TabBarView(
-                children: [
-                  DashboardContent(),
-                  Statistics(),
-                  WaterIntake(),
-                ],
-              ),
-              floatingActionButton: FloatingActionButton(
-                onPressed: () {},
-                backgroundColor: Colors.blue,
-                shape: const CircleBorder(),
-                child: Icon(
-                  Icons.bluetooth,
+          child: Scaffold(
+            appBar: AppBar(
+              automaticallyImplyLeading: false,
+              backgroundColor: Colors.blue,
+              title: Text(
+                'ZaBoteru',
+                style: TextStyle(
                   color: Colors.white,
-                  size: 28.sp,
+                  fontStyle: FontStyle.italic,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 26.sp,
                 ),
               ),
-              floatingActionButtonLocation:
-                  FloatingActionButtonLocation.miniEndFloat,
+              actions: <Widget>[
+                IconButton(
+                  icon: Icon(
+                    Icons.notifications,
+                    color: Colors.white,
+                    size: 26.sp,
+                  ),
+                  onPressed: () {
+                    // Navigate to the 'notification' page here
+                    Navigator.pushNamed(context, '/notification');
+                  },
+                ),
+                IconButton(
+                  icon: Icon(
+                    Icons.settings,
+                    color: Colors.white,
+                    size: 26.sp,
+                  ),
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/settings');
+                  },
+                ),
+              ],
+              bottom: TabBar(
+                tabs: [
+                  CustomTab(
+                    icon: Icon(
+                      Icons.home,
+                      color: Colors.white,
+                      size: 20.sp,
+                    ),
+                    text: 'Home',
+                  ),
+                  CustomTab(
+                    icon: Icon(
+                      Icons.show_chart_outlined,
+                      color: Colors.white,
+                      size: 20.sp,
+                    ),
+                    text: 'Statistics',
+                  ),
+                  CustomTab(
+                    icon: Icon(
+                      Icons.water,
+                      color: Colors.white,
+                      size: 20.sp,
+                    ),
+                    text: 'Intake',
+                  ),
+                ],
+              ),
             ),
+            body: const TabBarView(
+              children: [
+                DashboardContent(),
+                Statistics(),
+                WaterIntake(),
+              ],
+            ),
+            floatingActionButton: FloatingActionButton(
+              onPressed: () {},
+              backgroundColor: Colors.blue,
+              shape: const CircleBorder(),
+              child: Icon(
+                Icons.bluetooth,
+                color: Colors.white,
+                size: 28.sp,
+              ),
+            ),
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.miniEndFloat,
           ),
         ),
       ),

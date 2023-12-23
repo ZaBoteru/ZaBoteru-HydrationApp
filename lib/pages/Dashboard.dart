@@ -119,11 +119,9 @@ class _DashboardContentState extends State<DashboardContent> {
                     color: Color.fromARGB(255, 197, 205, 208),
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 8.0), // Adjust the padding as needed
+                    padding: EdgeInsets.symmetric(horizontal: 8.0.w),
                     child: SizedBox(
-                      height:
-                          120, // Set a fixed height or use MediaQuery.of(context).size.height
+                      height: 120.h,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -267,20 +265,13 @@ class _DashboardContentState extends State<DashboardContent> {
                                   }
                                 });
                               },
-                              activeColor:
-                                  Colors.blue, // Color when the switch is ON
-                              activeTrackColor: const Color.fromARGB(
-                                  255,
-                                  147,
-                                  191,
-                                  228), // Track color when the switch is ON
-                              inactiveTrackColor: const Color.fromARGB(255, 218,
-                                  218, 218), // Color when the switch is OFF
-                              inactiveThumbColor: const Color.fromARGB(
-                                  255,
-                                  174,
-                                  174,
-                                  174), // Track color when the switch is OFF),
+                              activeColor: Colors.blue,
+                              activeTrackColor:
+                                  const Color.fromARGB(255, 147, 191, 228),
+                              inactiveTrackColor:
+                                  const Color.fromARGB(255, 218, 218, 218),
+                              inactiveThumbColor:
+                                  const Color.fromARGB(255, 174, 174, 174),
                             ),
                           ],
                         ),
@@ -303,9 +294,10 @@ class _DashboardContentState extends State<DashboardContent> {
                                         sterilizationRemainingTime > 0
                                             ? 'Time Remaining till the end of Sterilization\n$sterilizationRemainingTime seconds'
                                             : 'Done Sterilization!',
-                                        style: const TextStyle(
-                                            color: Color.fromARGB(
-                                                255, 33, 33, 34)),
+                                        style: TextStyle(
+                                            color: const Color.fromARGB(
+                                                255, 33, 33, 34),
+                                            fontSize: 13.1.sp),
                                         textAlign: TextAlign.center,
                                       ),
                                     ),
@@ -335,18 +327,12 @@ class _DashboardContentState extends State<DashboardContent> {
                               },
                               activeColor:
                                   Colors.blue, // Color when the switch is ON
-                              activeTrackColor: const Color.fromARGB(
-                                  255,
-                                  147,
-                                  191,
-                                  228), // Track color when the switch is ON
-                              inactiveTrackColor: const Color.fromARGB(255, 218,
-                                  218, 218), // Color when the switch is OFF
-                              inactiveThumbColor: const Color.fromARGB(
-                                  255,
-                                  174,
-                                  174,
-                                  174), // Track color when the switch is OFF),
+                              activeTrackColor:
+                                  const Color.fromARGB(255, 147, 191, 228),
+                              inactiveTrackColor:
+                                  const Color.fromARGB(255, 218, 218, 218),
+                              inactiveThumbColor:
+                                  const Color.fromARGB(255, 174, 174, 174),
                             ),
                           ],
                         ),
