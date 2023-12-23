@@ -13,91 +13,100 @@ class TabController extends StatelessWidget {
       length: 3, // Set the number of tabs
       child: ScreenUtilInit(
         designSize: const Size(360, 640),
-        child: Scaffold(
-          appBar: AppBar(
-            automaticallyImplyLeading: false,
-            backgroundColor: Colors.blue,
-            title: Text(
-              'ZaBoteru',
-              style: TextStyle(
-                color: Colors.white,
-                fontStyle: FontStyle.italic,
-                fontWeight: FontWeight.w700,
-                fontSize: 26.sp,
-              ),
-            ),
-            actions: <Widget>[
-              IconButton(
-                icon: Icon(
-                  Icons.notifications,
+        child: GestureDetector(
+          behavior: HitTestBehavior
+              .opaque, // This will prevent the screen from resizing
+          onTap: () {
+            // Handle tap if needed
+            FocusScope.of(context)
+                .requestFocus(FocusNode()); // Dismiss keyboard
+          },
+          child: Scaffold(
+            appBar: AppBar(
+              automaticallyImplyLeading: false,
+              backgroundColor: Colors.blue,
+              title: Text(
+                'ZaBoteru',
+                style: TextStyle(
                   color: Colors.white,
-                  size: 26.sp,
+                  fontStyle: FontStyle.italic,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 26.sp,
                 ),
-                onPressed: () {
-                  // Navigate to the 'notification' page here
-                  Navigator.pushNamed(context, '/notification');
-                },
               ),
-              IconButton(
-                icon: Icon(
-                  Icons.settings,
-                  color: Colors.white,
-                  size: 26.sp,
-                ),
-                onPressed: () {
-                  // Navigate to the 'settings' page here
-                  Navigator.pushNamed(context, '/settings');
-                },
-              ),
-            ],
-            bottom: TabBar(
-              tabs: [
-                CustomTab(
+              actions: <Widget>[
+                IconButton(
                   icon: Icon(
-                    Icons.home,
+                    Icons.notifications,
                     color: Colors.white,
-                    size: 20.sp,
+                    size: 26.sp,
                   ),
-                  text: 'Home',
+                  onPressed: () {
+                    // Navigate to the 'notification' page here
+                    Navigator.pushNamed(context, '/notification');
+                  },
                 ),
-                CustomTab(
+                IconButton(
                   icon: Icon(
-                    Icons.show_chart_outlined,
+                    Icons.settings,
                     color: Colors.white,
-                    size: 20.sp,
+                    size: 26.sp,
                   ),
-                  text: 'Statistics',
-                ),
-                CustomTab(
-                  icon: Icon(
-                    Icons.water,
-                    color: Colors.white,
-                    size: 20.sp,
-                  ),
-                  text: 'Intake',
+                  onPressed: () {
+                    // Navigate to the 'settings' page here
+                    Navigator.pushNamed(context, '/settings');
+                  },
                 ),
               ],
+              bottom: TabBar(
+                tabs: [
+                  CustomTab(
+                    icon: Icon(
+                      Icons.home,
+                      color: Colors.white,
+                      size: 20.sp,
+                    ),
+                    text: 'Home',
+                  ),
+                  CustomTab(
+                    icon: Icon(
+                      Icons.show_chart_outlined,
+                      color: Colors.white,
+                      size: 20.sp,
+                    ),
+                    text: 'Statistics',
+                  ),
+                  CustomTab(
+                    icon: Icon(
+                      Icons.water,
+                      color: Colors.white,
+                      size: 20.sp,
+                    ),
+                    text: 'Intake',
+                  ),
+                ],
+              ),
             ),
-          ),
-          body: const TabBarView(
-            children: [
-              DashboardContent(),
-              Statistics(),
-              WaterIntake(),
-            ],
-          ),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {},
-            backgroundColor: Colors.blue,
-            shape: const CircleBorder(),
-            child: Icon(
-              Icons.bluetooth,
-              color: Colors.white,
-              size: 28.sp,
+            body: const TabBarView(
+              children: [
+                DashboardContent(),
+                Statistics(),
+                WaterIntake(),
+              ],
             ),
+            floatingActionButton: FloatingActionButton(
+              onPressed: () {},
+              backgroundColor: Colors.blue,
+              shape: const CircleBorder(),
+              child: Icon(
+                Icons.bluetooth,
+                color: Colors.white,
+                size: 28.sp,
+              ),
+            ),
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.miniEndFloat,
           ),
-          floatingActionButtonLocation:
-              FloatingActionButtonLocation.miniEndFloat,
         ),
       ),
     );

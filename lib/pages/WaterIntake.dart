@@ -44,93 +44,102 @@ class _WaterIntakeState extends State<WaterIntake> {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      child: Scaffold(
-        body: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Gender',
-                          style: TextStyle(
-                              fontSize: 16.sp,
-                              color: const Color.fromARGB(255, 22, 22, 22)),
-                        )
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        _buildCheckbox('Male', 'male'),
-                        _buildCheckbox('Female', 'female'),
-                      ],
-                    ),
-                  ],
-                ),
-                _buildTextInput('Weight (kg)', TextInputType.number, (value) {
-                  setState(() {
-                    weight = double.tryParse(value) ?? 0.0;
-                  });
-                }),
-                _buildTextInput('Height (cm)', TextInputType.number, (value) {
-                  setState(() {
-                    height = double.tryParse(value) ?? 0.0;
-                  });
-                }),
-                _buildDropdown('Country', countries, (value) {
-                  setState(() {
-                    selectedCountry = value;
-                  });
-                }),
-                _buildTextInput('Age', TextInputType.number, (value) {
-                  setState(() {
-                    age = int.tryParse(value) ?? 0;
-                  });
-                }),
-                _buildDropdown('Physical Activity', activities, (value) {
-                  setState(() {
-                    selectedActivity = value;
-                  });
-                }),
-                _buildTextInput(
-                    'Glasses of Water (250ml)', TextInputType.number, (value) {
-                  setState(() {
-                    glassesOfWater = int.tryParse(value) ?? 0;
-                  });
-                }),
-                SizedBox(height: 16.0.h),
-                ElevatedButton(
-                  onPressed: () {
-                    waterIntakeResult = calculateWaterIntake(
-                        selectedGender,
-                        selectedActivity,
-                        weight,
-                        height,
-                        selectedCountry,
-                        age,
-                        glassesOfWater);
-                    context
-                        .read<ResultProvider>()
-                        .changeresult(newResult: waterIntakeResult);
-                  },
-                  child: Text(
-                    'Submit',
-                    style: TextStyle(
-                      fontSize: 16.0.sp,
+      child: GestureDetector(
+        behavior: HitTestBehavior
+            .opaque, // This will prevent the screen from resizing
+        onTap: () {
+          // Handle tap if needed
+          FocusScope.of(context).requestFocus(FocusNode()); // Dismiss keyboard
+        },
+        child: Scaffold(
+          body: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Gender',
+                            style: TextStyle(
+                                fontSize: 16.sp,
+                                color: const Color.fromARGB(255, 22, 22, 22)),
+                          )
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          _buildCheckbox('Male', 'male'),
+                          _buildCheckbox('Female', 'female'),
+                        ],
+                      ),
+                    ],
+                  ),
+                  _buildTextInput('Weight (kg)', TextInputType.number, (value) {
+                    setState(() {
+                      weight = double.tryParse(value) ?? 0.0;
+                    });
+                  }),
+                  _buildTextInput('Height (cm)', TextInputType.number, (value) {
+                    setState(() {
+                      height = double.tryParse(value) ?? 0.0;
+                    });
+                  }),
+                  _buildDropdown('Country', countries, (value) {
+                    setState(() {
+                      selectedCountry = value;
+                    });
+                  }),
+                  _buildTextInput('Age', TextInputType.number, (value) {
+                    setState(() {
+                      age = int.tryParse(value) ?? 0;
+                    });
+                  }),
+                  _buildDropdown('Physical Activity', activities, (value) {
+                    setState(() {
+                      selectedActivity = value;
+                    });
+                  }),
+                  _buildTextInput(
+                      'Glasses of Water (250ml)', TextInputType.number,
+                      (value) {
+                    setState(() {
+                      glassesOfWater = int.tryParse(value) ?? 0;
+                    });
+                  }),
+                  SizedBox(height: 16.0.h),
+                  ElevatedButton(
+                    onPressed: () {
+                      waterIntakeResult = calculateWaterIntake(
+                          selectedGender,
+                          selectedActivity,
+                          weight,
+                          height,
+                          selectedCountry,
+                          age,
+                          glassesOfWater);
+                      context
+                          .read<ResultProvider>()
+                          .changeresult(newResult: waterIntakeResult);
+                    },
+                    child: Text(
+                      'Submit',
+                      style: TextStyle(
+                        fontSize: 16.0.sp,
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: 70.h,
-                )
-              ],
+                  SizedBox(
+                    height: 70.h,
+                  )
+                ],
+              ),
             ),
           ),
         ),
