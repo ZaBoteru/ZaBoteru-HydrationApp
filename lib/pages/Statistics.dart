@@ -16,35 +16,42 @@ class _StatisticsState extends State<Statistics> {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      child: Scaffold(
-        body: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(14.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                DropdownButton<String>(
-                  value: selectedOption,
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      selectedOption = newValue!;
-                    });
-                  },
-                  items: <String>[
-                    'daily',
-                    'weekly',
-                    'monthly',
-                    'yearly',
-                    'lifetime'
-                  ].map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                ),
-              ],
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: () {
+          // Dismiss keyboard if pressed anywhere out of it
+          FocusScope.of(context).requestFocus(FocusNode());
+        },
+        child: Scaffold(
+          body: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(14.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  DropdownButton<String>(
+                    value: selectedOption,
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        selectedOption = newValue!;
+                      });
+                    },
+                    items: <String>[
+                      'daily',
+                      'weekly',
+                      'monthly',
+                      'yearly',
+                      'lifetime'
+                    ].map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

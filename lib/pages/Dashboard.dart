@@ -80,11 +80,10 @@ class _DashboardContentState extends State<DashboardContent> {
     String formattedDate = '${today.day} ${months[today.month]} ${today.year}';
     return ScreenUtilInit(
       child: GestureDetector(
-        behavior: HitTestBehavior
-            .opaque, // This will prevent the screen from resizing
+        behavior: HitTestBehavior.opaque,
         onTap: () {
-          // Handle tap if needed
-          FocusScope.of(context).requestFocus(FocusNode()); // Dismiss keyboard
+          // Dismiss keyboard if pressed anywhere out of it
+          FocusScope.of(context).requestFocus(FocusNode());
         },
         child: Scaffold(
             body: SingleChildScrollView(
