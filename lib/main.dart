@@ -1,18 +1,38 @@
-import 'package:animated_splash_screen/animated_splash_screen.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:zaboteru/pages/NotificationPage.dart';
-import 'package:zaboteru/pages/Settings.dart';
 import 'package:lottie/lottie.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter/foundation.dart';
+import 'package:zaboteru/pages/Settings.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:device_preview/device_preview.dart';
+import 'package:zaboteru/pages/NotificationPage.dart';
+import 'package:zaboteru/providers/result_provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zaboteru/pages/TabController.dart' as custom;
-import 'package:provider/provider.dart';
-import 'package:zaboteru/providers/result_provider.dart';
+import 'package:animated_splash_screen/animated_splash_screen.dart';
+import 'package:awesome_notifications/awesome_notifications.dart';
 
 void main() {
   GoogleFonts.config.allowRuntimeFetching = false;
+  AwesomeNotifications().initialize('resource://drawable/res_white_logo', [
+    NotificationChannel(
+      channelKey: 'key',
+      channelName: 'Basic Notifications',
+      channelDescription: 'Notification channel for basic notifications',
+      defaultColor: Colors.blue,
+      importance: NotificationImportance.High,
+      channelShowBadge: true,
+    ),
+    NotificationChannel(
+      channelKey: 'scheduled_channel',
+      channelName: 'Scheduled Notifications',
+      channelDescription: 'This is a scheduled notification.',
+      defaultColor: Colors.teal,
+      locked: true,
+      importance: NotificationImportance.High,
+      soundSource: 'resource://raw/res_custom_notification',
+    ),
+  ]);
   runApp(const ZaBoteru());
   // runApp(DevicePreview(
   //   enabled: !kReleaseMode,

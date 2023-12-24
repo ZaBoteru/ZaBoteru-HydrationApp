@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:zaboteru/services/notifications.dart';
+import 'package:zaboteru/providers/result_provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
-import 'package:provider/provider.dart';
-import 'package:zaboteru/providers/result_provider.dart';
+import 'package:awesome_notifications/awesome_notifications.dart';
 
 class DashboardContent extends StatefulWidget {
   const DashboardContent({super.key});
@@ -13,10 +15,53 @@ class DashboardContent extends StatefulWidget {
 }
 
 class _DashboardContentState extends State<DashboardContent> {
+  // for notifications
+  @override
+  void initState() {
+    super.initState();
+    AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
+      if (!isAllowed) {
+        showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+                  title: const Text('Allow Notifications'),
+                  content: const Text(
+                      'Our app would like to send you notificatios.'),
+                  actions: [
+                    TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: Text(
+                          'Don\'t Allow',
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 18.sp,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        )),
+                    TextButton(
+                        onPressed: () => AwesomeNotifications()
+                            .requestPermissionToSendNotifications()
+                            .then((_) => Navigator.pop(context)),
+                        child: Text('Allow',
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 18.sp,
+                              fontWeight: FontWeight.bold,
+                            )))
+                  ],
+                ));
+      }
+    });
+  }
+
   bool isSterilization = false;
   bool isHeating = false;
   bool isVisible = false;
   DateTime today = DateTime.now();
+  int drunkAmount = 200;
+  int streak = 0;
 
   Map<int, String> months = {
     1: 'Jan',
@@ -62,6 +107,7 @@ class _DashboardContentState extends State<DashboardContent> {
           isSterilizationSwitchEnabled = false;
         });
 
+        notifySterilization();
         // Wait for 5 seconds before hiding the message
         Future.delayed(const Duration(seconds: 5), () {
           setState(() {
@@ -73,6 +119,11 @@ class _DashboardContentState extends State<DashboardContent> {
         });
       }
     });
+  }
+
+  int _calculatePercentage() {
+    int percent = ((drunkAmount / 1000) * 100).toInt();
+    return percent;
   }
 
   @override
@@ -105,12 +156,16 @@ class _DashboardContentState extends State<DashboardContent> {
                   CircularPercentIndicator(
                     radius: 100.w,
                     lineWidth: 14.w,
-                    percent: 0.4,
+                    percent: _calculatePercentage() / 100,
                     progressColor: Colors.blue,
                     backgroundColor: const Color.fromARGB(255, 197, 205, 208),
                     circularStrokeCap: CircularStrokeCap.round,
+                    animation: true,
+                    animateFromLastPercent: true,
                     center: Text(
-                      '40%',
+                      context.watch<ResultProvider>().result[0] < 0
+                          ? '0%'
+                          : '${_calculatePercentage().toString()}%',
                       style: TextStyle(fontSize: 28.sp),
                     ),
                   ),
@@ -145,6 +200,17 @@ class _DashboardContentState extends State<DashboardContent> {
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
+                                  SizedBox(
+                                    height: 8.h,
+                                  ),
+                                  Text(
+                                    '$streak',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 23.0.sp,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  )
                                 ]),
                               ),
                             ),
@@ -252,7 +318,7 @@ class _DashboardContentState extends State<DashboardContent> {
                               value: isSterilization,
                               onChanged: (value) {
                                 setState(() {
-                                  // Allow switch change only if isSwitchEnabled is true
+                                  // Allow switch change only if isSterilizationSwitchEnabled is true
                                   if (isSterilizationSwitchEnabled) {
                                     isVisible = true;
                                     isSterilization = value;
@@ -322,6 +388,9 @@ class _DashboardContentState extends State<DashboardContent> {
                               value: isHeating,
                               onChanged: (value) {
                                 setState(() {
+                                  if (drunkAmount < 1000) {
+                                    drunkAmount += 200;
+                                  }
                                   isHeating = value;
                                 });
                               },
