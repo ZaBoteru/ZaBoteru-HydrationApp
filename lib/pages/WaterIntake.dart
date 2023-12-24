@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:zaboteru/providers/result_provider.dart';
-
-List<double> waterIntakeResult = [0, 0];
+import 'dart:math';
 
 class WaterIntake extends StatefulWidget {
   const WaterIntake({super.key});
@@ -14,36 +13,27 @@ class WaterIntake extends StatefulWidget {
 }
 
 class _WaterIntakeState extends State<WaterIntake> {
-  String? selectedGender = '';
-  String? selectedCountry = '';
   String? selectedActivity = '';
   double weight = 0.0;
   double height = 0.0;
   int age = 0;
   int glassesOfWater = 0;
+  double goal = 0.0;
 
-  final List<String> countries = [
-    'Egypt',
-    'Saudi Arabia',
-    'Qatar',
-    'Kuwait',
-    'Bahrain',
-    'Oman',
-    'Jordan',
-    'Lebanon',
-    'Iraq',
-  ];
+  bool isMale = true;
 
   final List<String> activities = [
-    'Rare',
-    'Occasionally',
-    'Weekly',
-    'Daily',
+    'Sedentary',
+    'lightly active',
+    'Moderately active',
+    'Very active',
+    'Extremely active',
   ];
 
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
+      designSize: const Size(360, 640),
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: () {
@@ -58,25 +48,53 @@ class _WaterIntakeState extends State<WaterIntake> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Gender',
-                            style: TextStyle(
-                                fontSize: 16.sp,
-                                color: const Color.fromARGB(255, 22, 22, 22)),
-                          )
-                        ],
+                      IconButton(
+                        icon: Icon(
+                          Icons.man,
+                          color: isMale
+                              ? Colors.blue
+                              : Colors.grey, // Use isMale for color
+                          size: 26.sp,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            isMale =
+                                true; // Set isMale to true, color will update automatically
+                          });
+                        },
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          _buildCheckbox('Male', 'male'),
-                          _buildCheckbox('Female', 'female'),
-                        ],
+                      Text(
+                        'Male',
+                        style: TextStyle(
+                            fontSize: 14.sp,
+                            color: const Color.fromARGB(255, 22, 22, 22)),
+                      ),
+                      SizedBox(
+                        width: 30.0.w,
+                      ),
+                      IconButton(
+                        icon: Icon(
+                          Icons.woman_outlined,
+                          color: !isMale
+                              ? Colors.blue
+                              : Colors.grey, // Use !isMale for color
+                          size: 26.sp,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            isMale =
+                                false; // Set isMale to false, color will update automatically
+                          });
+                        },
+                      ),
+                      Text(
+                        'Female',
+                        style: TextStyle(
+                            fontSize: 14.sp,
+                            color: const Color.fromARGB(255, 22, 22, 22)),
                       ),
                     ],
                   ),
@@ -88,11 +106,6 @@ class _WaterIntakeState extends State<WaterIntake> {
                   _buildTextInput('Height (cm)', TextInputType.number, (value) {
                     setState(() {
                       height = double.tryParse(value) ?? 0.0;
-                    });
-                  }),
-                  _buildDropdown('Country', countries, (value) {
-                    setState(() {
-                      selectedCountry = value;
                     });
                   }),
                   _buildTextInput('Age', TextInputType.number, (value) {
@@ -115,17 +128,9 @@ class _WaterIntakeState extends State<WaterIntake> {
                   SizedBox(height: 16.0.h),
                   ElevatedButton(
                     onPressed: () {
-                      waterIntakeResult = calculateWaterIntake(
-                          selectedGender,
-                          selectedActivity,
-                          weight,
-                          height,
-                          selectedCountry,
-                          age,
-                          glassesOfWater);
-                      context
-                          .read<ResultProvider>()
-                          .changeresult(newResult: waterIntakeResult);
+                      goal = calculateWaterIntake(isMale, selectedActivity,
+                          weight, height, age, glassesOfWater);
+                      context.read<GoalProvider>().changeresult(newGoal: goal);
                     },
                     child: Text(
                       'Submit',
@@ -146,31 +151,20 @@ class _WaterIntakeState extends State<WaterIntake> {
     );
   }
 
-  Widget _buildCheckbox(String title, String value) {
-    return Row(
-      children: [
-        Checkbox(
-          value: selectedGender == value,
-          onChanged: (bool? newValue) {
-            setState(() {
-              selectedGender = value;
-            });
-          },
-        ),
-        Text(title),
-      ],
-    );
-  }
-
   Widget _buildTextInput(
       String label, TextInputType keyboardType, Function(String) onChanged) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 8.0.h),
-      child: TextField(
-        keyboardType: keyboardType,
-        onChanged: onChanged,
-        decoration: InputDecoration(
-          labelText: label,
+    return ScreenUtilInit(
+      designSize: const Size(360, 640),
+      child: Padding(
+        padding: EdgeInsets.symmetric(vertical: 8.0.h),
+        child: TextField(
+          keyboardType: keyboardType,
+          onChanged: onChanged,
+          style: TextStyle(fontSize: 16.0.sp),
+          decoration: InputDecoration(
+            labelText: label,
+            labelStyle: TextStyle(fontSize: 14.0.sp),
+          ),
         ),
       ),
     );
@@ -178,52 +172,65 @@ class _WaterIntakeState extends State<WaterIntake> {
 
   Widget _buildDropdown(
       String label, List<String> options, void Function(String?)? onChanged) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 8.0.h),
-      child: DropdownButtonFormField<String>(
-        value: options.isNotEmpty ? options.first : null,
-        onChanged: onChanged,
-        items: options.map((String option) {
-          return DropdownMenuItem<String>(
-            value: option,
-            child: Text(option),
-          );
-        }).toList(),
-        decoration: InputDecoration(
-          labelText: label,
+    return ScreenUtilInit(
+      designSize: const Size(360, 640),
+      child: Padding(
+        padding: EdgeInsets.symmetric(vertical: 8.0.h),
+        child: DropdownButtonFormField<String>(
+          value: options.isNotEmpty ? options.first : null,
+          onChanged: onChanged,
+          items: options.map((String option) {
+            return DropdownMenuItem<String>(
+              value: option,
+              child: Text(
+                option,
+                style: TextStyle(fontSize: 16.0.sp),
+              ),
+            );
+          }).toList(),
+          decoration: InputDecoration(
+            labelText: label,
+            labelStyle: TextStyle(fontSize: 14.0.sp),
+          ),
         ),
       ),
     );
   }
 }
 
-List<double> calculateWaterIntake(String? gender, String? exercise,
-    double weight, double height, String? country, int age, int waterGlasses) {
-  double baseWaterIntake = 0;
-  double activityWaterIntake = 0;
-  double totalWaterIntake = 0;
-  double neededWater = 0;
+double calculateWaterIntake(bool isMale, String? exercise, double weight,
+    double height, int age, int waterGlasses) {
+  // Body Surface Area
+  double bsa = 0.007184 * pow(height, 0.725) * pow(weight, 0.425);
+  // Basal Metabolic Rate
+  double bmr = 0.0;
+  // Water lost through transdermal evaporation in (ml)
+  double transdermalLoss = 350;
 
-  // in liter
-  if (gender == 'male') {
-    baseWaterIntake = 3.7;
+  // Based on Harris-Benedict Equation
+  if (isMale) {
+    bmr = 88.362 + (13.397 * weight) + (4.799 * height) - (5.677 * age);
   } else {
-    baseWaterIntake = 2.7;
+    bmr = 447.593 + (9.247 * weight) + (3.098 * height) - (4.330 * age);
   }
 
   // outputs in liter
-  if (exercise == 'Rare') {
-    activityWaterIntake = 0.03 * weight;
-  } else if (exercise == 'Occasionally') {
-    activityWaterIntake = 0.04 * weight;
-  } else if (exercise == 'Weekly') {
-    activityWaterIntake = 0.05 * weight;
-  } else if (exercise == 'Daily') {
-    activityWaterIntake = 0.06 * weight;
+  if (exercise == 'Sedentary') {
+    bmr *= 1.2;
+  } else if (exercise == 'lightly active') {
+    bmr *= 1.375;
+  } else if (exercise == 'Moderately active') {
+    bmr *= 1.55;
+  } else if (exercise == 'Very active') {
+    bmr *= 1.725;
+  } else if (exercise == 'Extremely active') {
+    bmr *= 1.9;
   }
 
-  totalWaterIntake = baseWaterIntake + activityWaterIntake;
-  neededWater = totalWaterIntake - waterGlasses * 0.25;
+  double totalWaterIntake =
+      bsa * transdermalLoss + bmr * 0.15 + 1500 + 150 - bmr / 4;
 
-  return [totalWaterIntake, neededWater];
+  // double neededWater = totalWaterIntake - waterGlasses * 0.25;
+
+  return (totalWaterIntake / 1000);
 }

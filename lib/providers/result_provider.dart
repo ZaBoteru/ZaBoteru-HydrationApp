@@ -1,16 +1,25 @@
 import 'package:flutter/material.dart';
 
-class ResultProvider extends ChangeNotifier {
-  List<double> result;
+class GoalProvider extends ChangeNotifier {
+  double goal;
 
-  ResultProvider({
-    this.result = const [0.0, 0.0],
+  GoalProvider({
+    this.goal = 0.0,
   });
 
   void changeresult({
-    required List<double> newResult,
+    required double newGoal,
   }) async {
-    result = newResult;
+    goal = newGoal;
+    notifyListeners();
+  }
+}
+
+class NotificationProvider extends ChangeNotifier {
+  List<String> notifications = [];
+
+  void addNotification(String notification) {
+    notifications.add(notification);
     notifyListeners();
   }
 }

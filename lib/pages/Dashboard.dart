@@ -23,34 +23,37 @@ class _DashboardContentState extends State<DashboardContent> {
       if (!isAllowed) {
         showDialog(
             context: context,
-            builder: (context) => AlertDialog(
-                  title: const Text('Allow Notifications'),
-                  content: const Text(
-                      'Our app would like to send you notificatios.'),
-                  actions: [
-                    TextButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: Text(
-                          'Don\'t Allow',
-                          style: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 18.sp,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        )),
-                    TextButton(
-                        onPressed: () => AwesomeNotifications()
-                            .requestPermissionToSendNotifications()
-                            .then((_) => Navigator.pop(context)),
-                        child: Text('Allow',
+            builder: (context) => ScreenUtilInit(
+                  designSize: const Size(360, 640),
+                  child: AlertDialog(
+                    title: const Text('Allow Notifications'),
+                    content: const Text(
+                        'Our app would like to send you notifications.'),
+                    actions: [
+                      TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text(
+                            'Don\'t Allow',
                             style: TextStyle(
                               color: Colors.grey,
                               fontSize: 18.sp,
                               fontWeight: FontWeight.bold,
-                            )))
-                  ],
+                            ),
+                          )),
+                      TextButton(
+                          onPressed: () => AwesomeNotifications()
+                              .requestPermissionToSendNotifications()
+                              .then((_) => Navigator.pop(context)),
+                          child: Text('Allow',
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 18.sp,
+                                fontWeight: FontWeight.bold,
+                              )))
+                    ],
+                  ),
                 ));
       }
     });
@@ -130,6 +133,7 @@ class _DashboardContentState extends State<DashboardContent> {
   Widget build(BuildContext context) {
     String formattedDate = '${today.day} ${months[today.month]} ${today.year}';
     return ScreenUtilInit(
+      designSize: const Size(360, 640),
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: () {
@@ -163,10 +167,13 @@ class _DashboardContentState extends State<DashboardContent> {
                     animation: true,
                     animateFromLastPercent: true,
                     center: Text(
-                      context.watch<ResultProvider>().result[0] < 0
+                      context.watch<GoalProvider>().goal < 0
                           ? '0%'
                           : '${_calculatePercentage().toString()}%',
-                      style: TextStyle(fontSize: 28.sp),
+                      style: TextStyle(
+                        fontSize: 28.sp,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                   SizedBox(height: 30.h),
@@ -175,126 +182,122 @@ class _DashboardContentState extends State<DashboardContent> {
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 8.0.w),
-                    child: SizedBox(
-                      height: 120.h,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Expanded(
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.blue,
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(4),
-                                child: Column(children: [
-                                  Text(
-                                    'Days Streak',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color:
-                                          const Color.fromARGB(255, 12, 57, 93),
-                                      fontSize: 16.0.sp,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.blue,
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(vertical: 10.0.h),
+                              child: Column(children: [
+                                Text(
+                                  'Days Streak',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color:
+                                        const Color.fromARGB(255, 12, 57, 93),
+                                    fontSize: 16.0.sp,
+                                    fontWeight: FontWeight.bold,
                                   ),
-                                  SizedBox(
-                                    height: 8.h,
+                                ),
+                                SizedBox(
+                                  height: 8.h,
+                                ),
+                                Text(
+                                  '$streak',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 23.0.sp,
+                                    fontWeight: FontWeight.bold,
                                   ),
-                                  Text(
-                                    '$streak',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 23.0.sp,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  )
-                                ]),
-                              ),
+                                )
+                              ]),
                             ),
                           ),
-                          SizedBox(
-                              width: 8.0.w), // Add space between containers
-                          Expanded(
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.blue,
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(4),
-                                child: Column(children: [
-                                  Text(
-                                    'Day Goal',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color:
-                                          const Color.fromARGB(255, 12, 57, 93),
-                                      fontSize: 16.0.sp,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                        ),
+                        SizedBox(
+                          width: 8.0.w,
+                        ), // Add space between containers
+                        Expanded(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.blue,
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(vertical: 10.0.h),
+                              child: Column(children: [
+                                Text(
+                                  'Day Goal',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color:
+                                        const Color.fromARGB(255, 12, 57, 93),
+                                    fontSize: 16.0.sp,
+                                    fontWeight: FontWeight.bold,
                                   ),
-                                  SizedBox(
-                                    height: 8.h,
+                                ),
+                                SizedBox(
+                                  height: 8.h,
+                                ),
+                                Text(
+                                  context
+                                      .watch<GoalProvider>()
+                                      .goal
+                                      .toStringAsPrecision(3),
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 23.0.sp,
+                                    fontWeight: FontWeight.bold,
                                   ),
-                                  Text(
-                                    context
-                                        .watch<ResultProvider>()
-                                        .result[0]
-                                        .toStringAsPrecision(3),
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 23.0.sp,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  )
-                                ]),
-                              ),
+                                )
+                              ]),
                             ),
                           ),
-                          SizedBox(
-                              width: 8.0.w), // Add space between containers
-                          Expanded(
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.blue,
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(4),
-                                child: Column(children: [
-                                  Text(
-                                    'Bottles to go',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color:
-                                          const Color.fromARGB(255, 12, 57, 93),
-                                      fontSize: 16.0.sp,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                        ),
+                        SizedBox(
+                          width: 8.0.w,
+                        ), // Add space between containers
+                        Expanded(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.blue,
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(vertical: 10.0.h),
+                              child: Column(children: [
+                                Text(
+                                  'Quota',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color:
+                                        const Color.fromARGB(255, 12, 57, 93),
+                                    fontSize: 16.0.sp,
+                                    fontWeight: FontWeight.bold,
                                   ),
-                                  SizedBox(
-                                    height: 8.h,
+                                ),
+                                SizedBox(
+                                  height: 8.h,
+                                ),
+                                Text(
+                                  '0.00',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 23.0.sp,
+                                    fontWeight: FontWeight.bold,
                                   ),
-                                  Text(
-                                    context
-                                        .watch<ResultProvider>()
-                                        .result[1]
-                                        .toStringAsPrecision(3),
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 23.0.sp,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  )
-                                ]),
-                              ),
+                                )
+                              ]),
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                   SizedBox(

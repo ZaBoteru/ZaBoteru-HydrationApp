@@ -16,6 +16,7 @@ class _StatisticsState extends State<Statistics> {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
+      designSize: const Size(360, 640),
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: () {
@@ -46,7 +47,10 @@ class _StatisticsState extends State<Statistics> {
                     ].map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
-                        child: Text(value),
+                        child: Text(
+                          value,
+                          style: TextStyle(fontSize: 16.0.sp),
+                        ),
                       );
                     }).toList(),
                   ),

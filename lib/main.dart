@@ -48,9 +48,7 @@ class ZaBoteru extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (context) => ResultProvider())
-      ],
+      providers: [ChangeNotifierProvider(create: (context) => GoalProvider())],
       child: ScreenUtilInit(
         builder: (_, child) => MaterialApp(
           debugShowCheckedModeBanner: false,

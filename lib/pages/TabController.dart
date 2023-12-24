@@ -27,9 +27,9 @@ class TabController extends StatelessWidget {
                 'ZaBoteru',
                 style: TextStyle(
                   color: Colors.white,
-                  fontStyle: FontStyle.italic,
+                  // fontStyle: FontStyle.italic,
                   fontWeight: FontWeight.w700,
-                  fontSize: 26.sp,
+                  fontSize: 24.sp,
                 ),
               ),
               actions: <Widget>[

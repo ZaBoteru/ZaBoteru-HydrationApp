@@ -15,6 +15,7 @@ class _SettingsState extends State<Settings> {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
+      designSize: const Size(360, 640),
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: () {

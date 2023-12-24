@@ -2,7 +2,6 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:zaboteru/services/utilities.dart';
 
 Future<void> notifySterilization() async {
-  print('notifySterilization function called');
   await AwesomeNotifications().createNotification(
     content: NotificationContent(
       id: createUniqueId(),
