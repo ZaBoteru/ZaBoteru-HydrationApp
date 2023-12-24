@@ -173,6 +173,7 @@ class _DashboardContentState extends State<DashboardContent> {
                       style: TextStyle(
                         fontSize: 28.sp,
                         fontWeight: FontWeight.w600,
+                        color: Colors.blue,
                       ),
                     ),
                   ),
