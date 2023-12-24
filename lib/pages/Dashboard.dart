@@ -193,7 +193,7 @@ class _DashboardContentState extends State<DashboardContent> {
                               borderRadius: BorderRadius.circular(10.0),
                             ),
                             child: Padding(
-                              padding: EdgeInsets.symmetric(vertical: 10.0.h),
+                              padding: EdgeInsets.symmetric(vertical: 16.0.h),
                               child: Column(children: [
                                 Text(
                                   'Days Streak',
@@ -202,7 +202,7 @@ class _DashboardContentState extends State<DashboardContent> {
                                     color:
                                         const Color.fromARGB(255, 12, 57, 93),
                                     fontSize: 16.0.sp,
-                                    fontWeight: FontWeight.bold,
+                                    fontWeight: FontWeight.w700,
                                   ),
                                 ),
                                 SizedBox(
@@ -230,7 +230,7 @@ class _DashboardContentState extends State<DashboardContent> {
                               borderRadius: BorderRadius.circular(10.0),
                             ),
                             child: Padding(
-                              padding: EdgeInsets.symmetric(vertical: 10.0.h),
+                              padding: EdgeInsets.symmetric(vertical: 16.0.h),
                               child: Column(children: [
                                 Text(
                                   'Day Goal',
@@ -239,7 +239,7 @@ class _DashboardContentState extends State<DashboardContent> {
                                     color:
                                         const Color.fromARGB(255, 12, 57, 93),
                                     fontSize: 16.0.sp,
-                                    fontWeight: FontWeight.bold,
+                                    fontWeight: FontWeight.w700,
                                   ),
                                 ),
                                 SizedBox(
@@ -270,7 +270,7 @@ class _DashboardContentState extends State<DashboardContent> {
                               borderRadius: BorderRadius.circular(10.0),
                             ),
                             child: Padding(
-                              padding: EdgeInsets.symmetric(vertical: 10.0.h),
+                              padding: EdgeInsets.symmetric(vertical: 16.0.h),
                               child: Column(children: [
                                 Text(
                                   'Quota',
@@ -279,7 +279,7 @@ class _DashboardContentState extends State<DashboardContent> {
                                     color:
                                         const Color.fromARGB(255, 12, 57, 93),
                                     fontSize: 16.0.sp,
-                                    fontWeight: FontWeight.bold,
+                                    fontWeight: FontWeight.w700,
                                   ),
                                 ),
                                 SizedBox(
