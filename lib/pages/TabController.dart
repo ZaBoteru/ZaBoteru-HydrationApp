@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zaboteru/pages/Dashboard.dart';
 import 'package:zaboteru/pages/Statistics.dart';
 import 'package:zaboteru/pages/WaterIntake.dart';
-import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
 
 class TabController extends StatefulWidget {
   const TabController({super.key});
@@ -13,7 +12,10 @@ class TabController extends StatefulWidget {
 }
 
 class _TabControllerState extends State<TabController> {
-  List<BluetoothDevice> devicesList = [];
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -99,18 +101,6 @@ class _TabControllerState extends State<TabController> {
                 WaterIntake(),
               ],
             ),
-            floatingActionButton: FloatingActionButton(
-              onPressed: () {},
-              backgroundColor: Colors.blue,
-              shape: const CircleBorder(),
-              child: Icon(
-                Icons.bluetooth,
-                color: Colors.white,
-                size: 28.sp,
-              ),
-            ),
-            floatingActionButtonLocation:
-                FloatingActionButtonLocation.miniEndFloat,
           ),
         ),
       ),
