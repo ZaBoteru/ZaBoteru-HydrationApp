@@ -33,11 +33,23 @@ void main() {
       soundSource: 'resource://raw/res_custom_notification',
     ),
   ]);
-  runApp(const ZaBoteru());
+
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (context) => GoalProvider()),
+    ],
+    child: const ZaBoteru(),
+  ));
+
   // runApp(DevicePreview(
   //   enabled: !kReleaseMode,
   //   builder: (BuildContext context) {
-  //     return const ZaBoteru();
+  //     return MultiProvider(
+  //       providers: [
+  //         ChangeNotifierProvider(create: (context) => GoalProvider()),
+  //       ],
+  //       child: const ZaBoteru(),
+  //     );
   //   },
   // ));
 }
@@ -47,54 +59,51 @@ class ZaBoteru extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [ChangeNotifierProvider(create: (context) => GoalProvider())],
-      child: ScreenUtilInit(
-        builder: (_, child) => MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'Flutter Demo',
-          theme: ThemeData(
-            textTheme: GoogleFonts.nunitoTextTheme(Theme.of(context).textTheme),
-            primarySwatch: Colors.blue,
-            colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
-            useMaterial3: true,
-          ),
-          routes: {
-            '/notification': (context) => const NotiPage(),
-            '/settings': (context) => const Settings(),
-          },
-          home: AnimatedSplashScreen(
-            splash: Stack(
-              fit: StackFit.expand,
-              children: [
-                Center(
-                    child: SizedBox(
-                  width: double.infinity.w,
-                  height: 400.h,
-                  child: Lottie.asset('assets/lottie/waterFill.json',
-                      fit: BoxFit.contain),
-                )),
-                Center(
-                  child: Text(
-                    'ZaBoteru',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 38.sp,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ],
-            ),
-            nextScreen: const custom.TabController(),
-            duration: 3100,
-            splashTransition: SplashTransition.fadeTransition,
-            backgroundColor: Colors.white,
-            splashIconSize: 400.sp,
-          ),
+    return ScreenUtilInit(
+      builder: (_, child) => MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          textTheme: GoogleFonts.nunitoTextTheme(Theme.of(context).textTheme),
+          primarySwatch: Colors.blue,
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+          useMaterial3: true,
         ),
-        designSize: const Size(360, 640),
+        routes: {
+          '/notification': (context) => const NotiPage(),
+          '/settings': (context) => const Settings(),
+        },
+        home: AnimatedSplashScreen(
+          splash: Stack(
+            fit: StackFit.expand,
+            children: [
+              Center(
+                  child: SizedBox(
+                width: double.infinity.w,
+                height: 400.h,
+                child: Lottie.asset('assets/lottie/waterFill.json',
+                    fit: BoxFit.contain),
+              )),
+              Center(
+                child: Text(
+                  'ZaBoteru',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 38.sp,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+            ],
+          ),
+          nextScreen: const custom.TabController(),
+          duration: 3100,
+          splashTransition: SplashTransition.fadeTransition,
+          backgroundColor: Colors.white,
+          splashIconSize: 400.sp,
+        ),
       ),
+      designSize: const Size(360, 640),
     );
   }
 }
