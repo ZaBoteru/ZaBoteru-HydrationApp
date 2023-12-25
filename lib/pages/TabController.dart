@@ -3,9 +3,17 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zaboteru/pages/Dashboard.dart';
 import 'package:zaboteru/pages/Statistics.dart';
 import 'package:zaboteru/pages/WaterIntake.dart';
+import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
 
-class TabController extends StatelessWidget {
+class TabController extends StatefulWidget {
   const TabController({super.key});
+
+  @override
+  State<TabController> createState() => _TabControllerState();
+}
+
+class _TabControllerState extends State<TabController> {
+  List<BluetoothDevice> devicesList = [];
 
   @override
   Widget build(BuildContext context) {

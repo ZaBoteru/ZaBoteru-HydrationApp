@@ -1,10 +1,10 @@
 import 'package:lottie/lottie.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter/foundation.dart';
+// import 'package:flutter/foundation.dart';
 import 'package:zaboteru/pages/Settings.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:device_preview/device_preview.dart';
+// import 'package:device_preview/device_preview.dart';
 import 'package:zaboteru/pages/NotificationPage.dart';
 import 'package:zaboteru/providers/result_provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
