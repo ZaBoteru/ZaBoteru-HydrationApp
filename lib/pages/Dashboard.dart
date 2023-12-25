@@ -26,7 +26,7 @@ class _DashboardContentState extends State<DashboardContent> {
   bool isHeating = false;
   bool isVisible = false;
   DateTime today = DateTime.now();
-  int drunkAmount = 200;
+  double drunkAmount = 0.0;
   int streak = 0;
 
   Map<int, String> months = {
@@ -96,6 +96,7 @@ class _DashboardContentState extends State<DashboardContent> {
   @override
   void dispose() {
     _sterilizationTimer?.cancel();
+    _dataSubscription?.cancel(); // Cancel the data subscription
     super.dispose();
   }
 
@@ -139,8 +140,8 @@ class _DashboardContentState extends State<DashboardContent> {
 
   // For Bluetooth
   late BluetoothConnection connection;
-
   bool get isConnected => (connection.isConnected);
+  StreamSubscription<Uint8List>? _dataSubscription;
 
   Future<void> connect() async {
     try {
@@ -149,6 +150,22 @@ class _DashboardContentState extends State<DashboardContent> {
         msg: 'Connected to the bluetooth device',
       );
       print('Connected to the bluetooth device');
+      _dataSubscription = connection.input?.listen(
+        (Uint8List data) {
+          String receivedString = utf8.decode(data);
+          print('Received data: $receivedString');
+          // use the incoming data
+          double dayGoal = context.watch<GoalProvider>().goal;
+          drunkAmount = dayGoal - double.parse(receivedString);
+          dayGoal -= double.parse(receivedString);
+        },
+        onDone: () {
+          print('Bluetooth connection closed');
+        },
+        onError: (error) {
+          print('Error reading data: $error');
+        },
+      );
     } catch (exception) {
       try {
         if (isConnected) {
