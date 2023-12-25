@@ -91,6 +91,18 @@ class TabController extends StatelessWidget {
                 WaterIntake(),
               ],
             ),
+            floatingActionButton: FloatingActionButton(
+              onPressed: () {},
+              backgroundColor: Colors.blue,
+              shape: const CircleBorder(),
+              child: Icon(
+                Icons.bluetooth,
+                color: Colors.white,
+                size: 28.sp,
+              ),
+            ),
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.miniEndFloat,
           ),
         ),
       ),

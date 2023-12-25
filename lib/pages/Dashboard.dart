@@ -7,13 +7,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 
-// For Bluetooth
-import 'dart:convert';
-import 'dart:typed_data';
-import 'dart:async';
-
-import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
-
 class DashboardContent extends StatefulWidget {
   const DashboardContent({super.key});
 
@@ -22,6 +15,32 @@ class DashboardContent extends StatefulWidget {
 }
 
 class _DashboardContentState extends State<DashboardContent> {
+  bool isSterilization = false;
+  bool isHeating = false;
+  bool isVisible = false;
+  DateTime today = DateTime.now();
+  int drunkAmount = 200;
+  int streak = 0;
+
+  Map<int, String> months = {
+    1: 'Jan',
+    2: 'Feb',
+    3: 'Mar',
+    4: 'Apr',
+    5: 'May',
+    6: 'Jun',
+    7: 'Jul',
+    8: 'Aug',
+    9: 'Sep',
+    10: 'Oct',
+    11: 'Nov',
+    12: 'Dec',
+  };
+
+  Timer? _sterilizationTimer;
+  bool isSterilizationSwitchEnabled = true;
+  int sterilizationRemainingTime = 10;
+
   // For Notifications
   @override
   void initState() {
@@ -66,32 +85,6 @@ class _DashboardContentState extends State<DashboardContent> {
       }
     });
   }
-
-  bool isSterilization = false;
-  bool isHeating = false;
-  bool isVisible = false;
-  DateTime today = DateTime.now();
-  int drunkAmount = 200;
-  int streak = 0;
-
-  Map<int, String> months = {
-    1: 'Jan',
-    2: 'Feb',
-    3: 'Mar',
-    4: 'Apr',
-    5: 'May',
-    6: 'Jun',
-    7: 'Jul',
-    8: 'Aug',
-    9: 'Sep',
-    10: 'Oct',
-    11: 'Nov',
-    12: 'Dec',
-  };
-
-  Timer? _sterilizationTimer;
-  bool isSterilizationSwitchEnabled = true;
-  int sterilizationRemainingTime = 10;
 
   @override
   void dispose() {
@@ -424,18 +417,6 @@ class _DashboardContentState extends State<DashboardContent> {
                   ]),
             ),
           ),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {},
-            backgroundColor: Colors.blue,
-            shape: const CircleBorder(),
-            child: Icon(
-              Icons.bluetooth,
-              color: Colors.white,
-              size: 28.sp,
-            ),
-          ),
-          floatingActionButtonLocation:
-              FloatingActionButtonLocation.miniEndFloat,
         ),
       ),
     );
