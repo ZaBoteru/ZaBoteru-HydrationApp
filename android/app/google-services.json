@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "349516420887",
+    "firebase_url": "https://zaboteru-default-rtdb.firebaseio.com",
+    "project_id": "zaboteru",
+    "storage_bucket": "zaboteru.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:349516420887:android:dca655bb08eafa56df8952",
+        "android_client_info": {
+          "package_name": "com.example.zaboteru"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyATsvEh7cJHAN359_mIT06Xj4Rslhu8YAA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

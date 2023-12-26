@@ -1,8 +1,8 @@
 import 'dart:async';
-import 'dart:convert';
-import 'dart:typed_data';
-import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
+import 'dart:ffi';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -11,8 +11,6 @@ import 'package:zaboteru/providers/result_provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
-
-dynamic tabController = tabController();
 
 class DashboardContent extends StatefulWidget {
   const DashboardContent({super.key});
@@ -26,8 +24,19 @@ class _DashboardContentState extends State<DashboardContent> {
   bool isHeating = false;
   bool isVisible = false;
   DateTime today = DateTime.now();
-  double drunkAmount = 0.0;
   int streak = 0;
+
+  // For Firebase and Arduino Control
+  bool ledOn = false;
+  bool heaterOn = false;
+  double drunkAmount = 0.0;
+  double temperature = 0.0;
+  final database = FirebaseDatabase.instance.ref();
+
+  // Sterilization Timing
+  Timer? _sterilizationTimer;
+  bool isSterilizationSwitchEnabled = true;
+  int sterilizationRemainingTime = 10;
 
   Map<int, String> months = {
     1: 'Jan',
@@ -44,9 +53,20 @@ class _DashboardContentState extends State<DashboardContent> {
     12: 'Dec',
   };
 
-  Timer? _sterilizationTimer;
-  bool isSterilizationSwitchEnabled = true;
-  int sterilizationRemainingTime = 10;
+  // constructor
+  _DashboardContentState() {
+    database.child('ESP').once().then((snap) {
+      temperature = snap.child('temperature').val();
+    });
+
+    database.child('ESP').onChildChanged.listen((event) {
+      DataSnapshot snap = event.snapshot;
+      if (snap.key == 'drunkAmount') {
+        drunkAmount = snap.snapshot.value;
+        setState(() {});
+      }
+    });
+  }
 
   // For Notifications
   @override
@@ -96,7 +116,6 @@ class _DashboardContentState extends State<DashboardContent> {
   @override
   void dispose() {
     _sterilizationTimer?.cancel();
-    _dataSubscription?.cancel(); // Cancel the data subscription
     super.dispose();
   }
 
@@ -136,62 +155,6 @@ class _DashboardContentState extends State<DashboardContent> {
   int _calculatePercentage() {
     int percent = ((drunkAmount / 1000) * 100).toInt();
     return percent;
-  }
-
-  // For Bluetooth
-  late BluetoothConnection connection;
-  bool get isConnected => (connection.isConnected);
-  StreamSubscription<Uint8List>? _dataSubscription;
-
-  Future<void> connect() async {
-    try {
-      connection = await BluetoothConnection.toAddress('00:22:04:00:D4:DE');
-      Fluttertoast.showToast(
-        msg: 'Connected to the bluetooth device',
-      );
-      print('Connected to the bluetooth device');
-      _dataSubscription = connection.input?.listen(
-        (Uint8List data) {
-          String receivedString = utf8.decode(data);
-          print('Received data: $receivedString');
-          // use the incoming data
-          double dayGoal = context.watch<GoalProvider>().goal;
-          drunkAmount = dayGoal - double.parse(receivedString);
-          dayGoal -= double.parse(receivedString);
-        },
-        onDone: () {
-          print('Bluetooth connection closed');
-        },
-        onError: (error) {
-          print('Error reading data: $error');
-        },
-      );
-    } catch (exception) {
-      try {
-        if (isConnected) {
-          Fluttertoast.showToast(
-            msg: 'Already connected to the device',
-          );
-          print('Already connected to the device');
-        } else {
-          Fluttertoast.showToast(
-            msg: 'Cannot connect, exception occured',
-          );
-          print('Cannot connect, exception occured');
-        }
-      } catch (e) {
-        Fluttertoast.showToast(
-          msg: 'Cannot connect, probably not initialized connection',
-        );
-        print('Cannot connect, probably not initialized connection');
-      }
-    }
-  }
-
-  Future<void> sendData(String data) async {
-    connection.output
-        .add(Uint8List.fromList(utf8.encode(data))); // Sending data
-    await connection.output.allSent;
   }
 
   @override
@@ -389,12 +352,12 @@ class _DashboardContentState extends State<DashboardContent> {
                                       isVisible = true;
                                       isSterilization = value;
                                       if (value) {
+                                        ledOn = !ledOn;
                                         _startSterilizationTimer();
-                                        sendData('1');
                                       } else {
+                                        ledOn = !ledOn;
                                         // If the switch is turned off, cancel the timer
                                         _sterilizationTimer?.cancel();
-                                        sendData('0');
                                       }
                                     }
                                   });
@@ -458,11 +421,6 @@ class _DashboardContentState extends State<DashboardContent> {
                                 onChanged: (value) {
                                   setState(() {
                                     isHeating = value;
-                                    if (value) {
-                                      sendData('3');
-                                    } else {
-                                      sendData('2');
-                                    }
                                   });
                                 },
                                 activeColor:
@@ -477,6 +435,9 @@ class _DashboardContentState extends State<DashboardContent> {
                             ],
                           ),
                         ),
+                        Text(
+                          ledOn ? 'Led on' : 'Led off',
+                        ),
                         SizedBox(
                           height: 70.h,
                         ),
@@ -486,7 +447,7 @@ class _DashboardContentState extends State<DashboardContent> {
             ),
           ),
           floatingActionButton: FloatingActionButton(
-            onPressed: () => connect(),
+            onPressed: () {},
             backgroundColor: Colors.blue,
             shape: const CircleBorder(),
             child: Icon(
