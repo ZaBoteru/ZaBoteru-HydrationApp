@@ -145,7 +145,7 @@ class _DashboardContentState extends State<DashboardContent> {
 
   Future<void> connect() async {
     try {
-      connection = await BluetoothConnection.toAddress("00:21:07:00:07:EE");
+      connection = await BluetoothConnection.toAddress('00:22:04:00:D4:DE');
       Fluttertoast.showToast(
         msg: 'Connected to the bluetooth device',
       );
