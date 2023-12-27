@@ -25,6 +25,7 @@ class _DashboardContentState extends State<DashboardContent> {
   DateTime today = DateTime.now();
   int streak = 0;
   int percent = 0;
+  bool isDay = false;
 
   // For Firebase and ESP8266 Control
   int ledOn = 0;
@@ -69,15 +70,13 @@ class _DashboardContentState extends State<DashboardContent> {
         ledOn = values[1].value;
         drunkAmount = values[2].value;
         needRefill = values[3].value;
+        if (needRefill == true) {
+          notifyRifilling();
+        }
         temperature = values[4].value;
         vibration = values[5].value;
-        print(drunkAmount);
       });
     });
-
-    if (needRefill == true) {
-      notifyRifilling();
-    }
 
     AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
       if (!isAllowed) {
@@ -171,6 +170,9 @@ class _DashboardContentState extends State<DashboardContent> {
     // Ensure that the goal is not zero to avoid division by zero
     if (goal != 0) {
       percent = ((drunkAmount / goal) * 100).toInt();
+      if (percent == 100) {
+        isDay = true;
+      }
       return percent;
     } else {
       return 0; // Return 0 if the goal is zero to avoid division by zero
@@ -262,9 +264,7 @@ class _DashboardContentState extends State<DashboardContent> {
                                     height: 8.h,
                                   ),
                                   Text(
-                                    _calculatePercentage() / 100 > 1
-                                        ? '1 Day'
-                                        : '$streak Days',
+                                    isDay ? '1 Day' : '$streak Days',
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 23.0.sp,
@@ -452,6 +452,7 @@ class _DashboardContentState extends State<DashboardContent> {
                                       heaterOn = 1;
                                       isHeatingVisible = true;
                                       // Update the Heater value to 1 in Firebase
+                                      initState();
                                       databaseReference
                                           .child('ESP')
                                           .child('Heater')
@@ -460,6 +461,7 @@ class _DashboardContentState extends State<DashboardContent> {
                                       heaterOn = 0;
                                       isHeatingVisible = false;
                                       // Update the Heater value to 1 in Firebase
+                                      initState();
                                       databaseReference
                                           .child('ESP')
                                           .child('Heater')
