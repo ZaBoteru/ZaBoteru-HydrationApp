@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'dart:ffi';
+import 'dart:convert';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -25,13 +25,16 @@ class _DashboardContentState extends State<DashboardContent> {
   bool isVisible = false;
   DateTime today = DateTime.now();
   int streak = 0;
+  int oldPercent = 0;
+  int percent = 0;
 
-  // For Firebase and Arduino Control
-  bool ledOn = false;
-  bool heaterOn = false;
+  // For Firebase and ESP8266 Control
+  int ledOn = 0;
+  int heaterOn = 0;
   double drunkAmount = 0.0;
   double temperature = 0.0;
-  final database = FirebaseDatabase.instance.ref();
+
+  DatabaseReference databaseReference = FirebaseDatabase.instance.ref();
 
   // Sterilization Timing
   Timer? _sterilizationTimer;
@@ -53,25 +56,21 @@ class _DashboardContentState extends State<DashboardContent> {
     12: 'Dec',
   };
 
-  // constructor
-  _DashboardContentState() {
-    database.child('ESP').once().then((snap) {
-      temperature = snap.child('temperature').val();
-    });
-
-    database.child('ESP').onChildChanged.listen((event) {
-      DataSnapshot snap = event.snapshot;
-      if (snap.key == 'drunkAmount') {
-        drunkAmount = snap.snapshot.value;
-        setState(() {});
-      }
-    });
-  }
-
   // For Notifications
   @override
   void initState() {
     super.initState();
+
+    databaseReference.child('ESP').onValue.listen((event) {
+      final DataSnapshot snapshot = event.snapshot;
+      List values = snapshot.children.toList();
+      setState(() {
+        heaterOn = values[0].value;
+        ledOn = values[1].value;
+        drunkAmount = values[2].value;
+        temperature = values[3].value;
+      });
+    });
 
     AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
       if (!isAllowed) {
@@ -127,6 +126,8 @@ class _DashboardContentState extends State<DashboardContent> {
         sterilizationRemainingTime--;
       });
 
+      // Update the ledOn value to 1 in Firebase
+      databaseReference.child('ESP').child('LED').set(1);
       if (sterilizationRemainingTime <= 0) {
         _sterilizationTimer?.cancel();
         setState(() {
@@ -146,6 +147,9 @@ class _DashboardContentState extends State<DashboardContent> {
             sterilizationRemainingTime =
                 10; // Reset the timer for the next sterilization
             isSterilizationSwitchEnabled = true;
+            // Update the ledOn value to 0 in Firebase
+            databaseReference.child('ESP').child('LED').set(0);
+            ledOn = 0;
           });
         });
       }
@@ -153,8 +157,17 @@ class _DashboardContentState extends State<DashboardContent> {
   }
 
   int _calculatePercentage() {
-    int percent = ((drunkAmount / 1000) * 100).toInt();
-    return percent;
+    // Access the goal from the provider
+    double goal = Provider.of<GoalProvider>(context).goal;
+
+    // Ensure that the goal is not zero to avoid division by zero
+    if (goal != 0) {
+      percent = ((drunkAmount / goal) * 100).toInt() + oldPercent;
+      oldPercent = percent;
+      return percent;
+    } else {
+      return 0; // Return 0 if the goal is zero to avoid division by zero
+    }
   }
 
   @override
@@ -188,7 +201,9 @@ class _DashboardContentState extends State<DashboardContent> {
                     CircularPercentIndicator(
                       radius: 100.w,
                       lineWidth: 14.w,
-                      percent: _calculatePercentage() / 100,
+                      percent: _calculatePercentage() / 100 >= 1
+                          ? 1
+                          : _calculatePercentage() / 100,
                       progressColor: Colors.blue,
                       backgroundColor: const Color.fromARGB(255, 197, 205, 208),
                       circularStrokeCap: CircularStrokeCap.round,
@@ -312,7 +327,7 @@ class _DashboardContentState extends State<DashboardContent> {
                                     height: 8.h,
                                   ),
                                   Text(
-                                    '0.00L',
+                                    '${(Provider.of<GoalProvider>(context).goal - (percent / 100) * Provider.of<GoalProvider>(context).goal).toStringAsPrecision(3)}L',
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 23.0.sp,
@@ -352,10 +367,9 @@ class _DashboardContentState extends State<DashboardContent> {
                                       isVisible = true;
                                       isSterilization = value;
                                       if (value) {
-                                        ledOn = !ledOn;
+                                        ledOn = 1;
                                         _startSterilizationTimer();
                                       } else {
-                                        ledOn = !ledOn;
                                         // If the switch is turned off, cancel the timer
                                         _sterilizationTimer?.cancel();
                                       }
@@ -421,6 +435,21 @@ class _DashboardContentState extends State<DashboardContent> {
                                 onChanged: (value) {
                                   setState(() {
                                     isHeating = value;
+                                    if (value) {
+                                      heaterOn = 1;
+                                      // Update the Heater value to 1 in Firebase
+                                      databaseReference
+                                          .child('ESP')
+                                          .child('Heater')
+                                          .set(1);
+                                    } else {
+                                      heaterOn = 0;
+                                      // Update the Heater value to 1 in Firebase
+                                      databaseReference
+                                          .child('ESP')
+                                          .child('Heater')
+                                          .set(0);
+                                    }
                                   });
                                 },
                                 activeColor:
@@ -434,9 +463,6 @@ class _DashboardContentState extends State<DashboardContent> {
                               ),
                             ],
                           ),
-                        ),
-                        Text(
-                          ledOn ? 'Led on' : 'Led off',
                         ),
                         SizedBox(
                           height: 70.h,
