@@ -23,9 +23,9 @@ class _DashboardContentState extends State<DashboardContent> {
   bool isSterilization = false;
   bool isHeating = false;
   bool isVisible = false;
+  bool isHeatingVisible = false;
   DateTime today = DateTime.now();
   int streak = 0;
-  int oldPercent = 0;
   int percent = 0;
 
   // For Firebase and ESP8266 Control
@@ -128,6 +128,7 @@ class _DashboardContentState extends State<DashboardContent> {
 
       // Update the ledOn value to 1 in Firebase
       databaseReference.child('ESP').child('LED').set(1);
+
       if (sterilizationRemainingTime <= 0) {
         _sterilizationTimer?.cancel();
         setState(() {
@@ -140,6 +141,9 @@ class _DashboardContentState extends State<DashboardContent> {
         });
 
         notifySterilization();
+        // Update the ledOn value to 0 in Firebase
+        databaseReference.child('ESP').child('LED').set(0);
+        ledOn = 0;
         // Wait for 5 seconds before hiding the message
         Future.delayed(const Duration(seconds: 5), () {
           setState(() {
@@ -147,9 +151,6 @@ class _DashboardContentState extends State<DashboardContent> {
             sterilizationRemainingTime =
                 10; // Reset the timer for the next sterilization
             isSterilizationSwitchEnabled = true;
-            // Update the ledOn value to 0 in Firebase
-            databaseReference.child('ESP').child('LED').set(0);
-            ledOn = 0;
           });
         });
       }
@@ -162,8 +163,7 @@ class _DashboardContentState extends State<DashboardContent> {
 
     // Ensure that the goal is not zero to avoid division by zero
     if (goal != 0) {
-      percent = ((drunkAmount / goal) * 100).toInt() + oldPercent;
-      oldPercent = percent;
+      percent = ((drunkAmount / goal) * 100).toInt();
       return percent;
     } else {
       return 0; // Return 0 if the goal is zero to avoid division by zero
@@ -201,7 +201,7 @@ class _DashboardContentState extends State<DashboardContent> {
                     CircularPercentIndicator(
                       radius: 100.w,
                       lineWidth: 14.w,
-                      percent: _calculatePercentage() / 100 >= 1
+                      percent: _calculatePercentage() / 100 > 1
                           ? 1
                           : _calculatePercentage() / 100,
                       progressColor: Colors.blue,
@@ -212,7 +212,9 @@ class _DashboardContentState extends State<DashboardContent> {
                       center: Text(
                         context.watch<GoalProvider>().goal < 0
                             ? '0%'
-                            : '${_calculatePercentage().toString()}%',
+                            : _calculatePercentage() / 100 > 1
+                                ? '100%'
+                                : '${_calculatePercentage().toString()}%',
                         style: TextStyle(
                           fontSize: 28.sp,
                           fontWeight: FontWeight.w600,
@@ -327,7 +329,9 @@ class _DashboardContentState extends State<DashboardContent> {
                                     height: 8.h,
                                   ),
                                   Text(
-                                    '${(Provider.of<GoalProvider>(context).goal - (percent / 100) * Provider.of<GoalProvider>(context).goal).toStringAsPrecision(3)}L',
+                                    _calculatePercentage() / 100 > 1
+                                        ? '0.00L'
+                                        : '${(Provider.of<GoalProvider>(context).goal - (percent / 100) * Provider.of<GoalProvider>(context).goal).toStringAsPrecision(3)}L',
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 23.0.sp,
@@ -434,9 +438,11 @@ class _DashboardContentState extends State<DashboardContent> {
                                 value: isHeating,
                                 onChanged: (value) {
                                   setState(() {
+                                    isVisible = true;
                                     isHeating = value;
                                     if (value) {
                                       heaterOn = 1;
+                                      isHeatingVisible = true;
                                       // Update the Heater value to 1 in Firebase
                                       databaseReference
                                           .child('ESP')
@@ -444,6 +450,7 @@ class _DashboardContentState extends State<DashboardContent> {
                                           .set(1);
                                     } else {
                                       heaterOn = 0;
+                                      isHeatingVisible = false;
                                       // Update the Heater value to 1 in Firebase
                                       databaseReference
                                           .child('ESP')
@@ -463,6 +470,37 @@ class _DashboardContentState extends State<DashboardContent> {
                               ),
                             ],
                           ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(left: 16.0.w, right: 16.0.w),
+                          child: Visibility(
+                              visible: isHeatingVisible,
+                              child: SizedBox(
+                                height: 40.h,
+                                child: Padding(
+                                  padding: EdgeInsets.only(
+                                      left: 16.0.w, right: 16.0.w),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Flexible(
+                                        child: Text(
+                                          temperature < 25
+                                              ? 'The heater is on, $temperature celsius'
+                                              : 'We reached the temperature limit\n$temperature celsius',
+                                          style: TextStyle(
+                                              color: const Color.fromARGB(
+                                                  255, 33, 33, 34),
+                                              fontSize: 13.1.sp),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              )),
                         ),
                         SizedBox(
                           height: 70.h,
