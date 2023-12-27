@@ -70,7 +70,7 @@ class _DashboardContentState extends State<DashboardContent> {
         drunkAmount = values[2].value;
         needRefill = values[3].value;
         temperature = values[4].value;
-        vibration = values[5].valus;
+        vibration = values[5].value;
       });
     });
 
