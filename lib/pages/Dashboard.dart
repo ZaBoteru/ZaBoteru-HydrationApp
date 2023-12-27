@@ -261,7 +261,9 @@ class _DashboardContentState extends State<DashboardContent> {
                                     height: 8.h,
                                   ),
                                   Text(
-                                    '$streak Days',
+                                    _calculatePercentage() / 100 > 1
+                                        ? '1 Day'
+                                        : '$streak Days',
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 23.0.sp,
