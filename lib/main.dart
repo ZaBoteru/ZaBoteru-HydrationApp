@@ -30,7 +30,7 @@ void main() async {
       channelShowBadge: true,
     ),
     NotificationChannel(
-      channelKey: 'scheduled_channel',
+      channelKey: 'refilling_channel',
       channelName: 'Scheduled Notifications',
       channelDescription: 'This is a scheduled notification.',
       defaultColor: Colors.teal,
@@ -40,24 +40,24 @@ void main() async {
     ),
   ]);
 
-  // runApp(MultiProvider(
-  //   providers: [
-  //     ChangeNotifierProvider(create: (context) => GoalProvider()),
-  //   ],
-  //   child: const ZaBoteru(),
-  // ));
-
-  runApp(DevicePreview(
-    enabled: !kReleaseMode,
-    builder: (BuildContext context) {
-      return MultiProvider(
-        providers: [
-          ChangeNotifierProvider(create: (context) => GoalProvider()),
-        ],
-        child: const ZaBoteru(),
-      );
-    },
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (context) => GoalProvider()),
+    ],
+    child: const ZaBoteru(),
   ));
+
+  // runApp(DevicePreview(
+  //   enabled: !kReleaseMode,
+  //   builder: (BuildContext context) {
+  //     return MultiProvider(
+  //       providers: [
+  //         ChangeNotifierProvider(create: (context) => GoalProvider()),
+  //       ],
+  //       child: const ZaBoteru(),
+  //     );
+  //   },
+  // ));
 }
 
 class ZaBoteru extends StatelessWidget {

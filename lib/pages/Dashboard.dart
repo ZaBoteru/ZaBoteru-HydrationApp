@@ -1,8 +1,6 @@
 import 'dart:async';
-import 'dart:convert';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -32,7 +30,9 @@ class _DashboardContentState extends State<DashboardContent> {
   int ledOn = 0;
   int heaterOn = 0;
   double drunkAmount = 0.0;
+  bool needRefill = false;
   double temperature = 0.0;
+  int vibration = 0;
 
   DatabaseReference databaseReference = FirebaseDatabase.instance.ref();
 
@@ -68,9 +68,15 @@ class _DashboardContentState extends State<DashboardContent> {
         heaterOn = values[0].value;
         ledOn = values[1].value;
         drunkAmount = values[2].value;
-        temperature = values[3].value;
+        needRefill = values[3].value;
+        temperature = values[4].value;
+        vibration = values[5].valus;
       });
     });
+
+    if (needRefill == true) {
+      notifyRifilling();
+    }
 
     AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
       if (!isAllowed) {
@@ -438,7 +444,6 @@ class _DashboardContentState extends State<DashboardContent> {
                                 value: isHeating,
                                 onChanged: (value) {
                                   setState(() {
-                                    isVisible = true;
                                     isHeating = value;
                                     if (value) {
                                       heaterOn = 1;

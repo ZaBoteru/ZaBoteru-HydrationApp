@@ -73,36 +73,6 @@ class _SettingsState extends State<Settings> {
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text(
-                      'Dark Theme',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 18.sp,
-                      ),
-                    ),
-                    Switch(
-                      value: isDark,
-                      onChanged: (value) {
-                        setState(() {
-                          isDark = value;
-                        });
-                      },
-                      activeColor: Colors.blue, // Color when the switch is ON
-                      activeTrackColor: const Color.fromARGB(255, 147, 191,
-                          228), // Track color when the switch is ON
-                      inactiveTrackColor: const Color.fromARGB(
-                          255, 218, 218, 218), // Color when the switch is OFF
-                      inactiveThumbColor: const Color.fromARGB(255, 174, 174,
-                          174), // Track color when the switch is OFF),
-                    ),
-                  ],
-                ),
-              ),
             ],
           ),
         ),
