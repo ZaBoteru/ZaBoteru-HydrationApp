@@ -71,6 +71,7 @@ class _DashboardContentState extends State<DashboardContent> {
         needRefill = values[3].value;
         temperature = values[4].value;
         vibration = values[5].value;
+        print(drunkAmount);
       });
     });
 
@@ -517,18 +518,18 @@ class _DashboardContentState extends State<DashboardContent> {
                   ]),
             ),
           ),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {},
-            backgroundColor: Colors.blue,
-            shape: const CircleBorder(),
-            child: Icon(
-              Icons.bluetooth,
-              color: Colors.white,
-              size: 28.sp,
-            ),
-          ),
-          floatingActionButtonLocation:
-              FloatingActionButtonLocation.miniEndFloat,
+          // floatingActionButton: FloatingActionButton(
+          //   onPressed: () {},
+          //   backgroundColor: Colors.blue,
+          //   shape: const CircleBorder(),
+          //   child: Icon(
+          //     Icons.bluetooth,
+          //     color: Colors.white,
+          //     size: 28.sp,
+          //   ),
+          // ),
+          // floatingActionButtonLocation:
+          //     FloatingActionButtonLocation.miniEndFloat,
         ),
       ),
     );
