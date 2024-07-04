@@ -2,17 +2,18 @@ import 'firebase_options.dart';
 import 'package:lottie/lottie.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter/foundation.dart';
 import 'package:zaboteru/pages/Settings.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:device_preview/device_preview.dart';
 import 'package:zaboteru/pages/NotificationPage.dart';
 import 'package:zaboteru/providers/result_provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zaboteru/pages/TabController.dart' as custom;
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
+// Uncomment the following imports to enable the device preview.
+// import 'package:flutter/foundation.dart';
+// import 'package:device_preview/device_preview.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,44 +21,55 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   GoogleFonts.config.allowRuntimeFetching = false;
-  AwesomeNotifications().initialize('resource://drawable/res_white_logo', [
-    NotificationChannel(
-      channelKey: 'key',
-      channelName: 'Basic Notifications',
-      channelDescription: 'Notification channel for basic notifications',
-      defaultColor: Colors.blue,
-      importance: NotificationImportance.High,
-      channelShowBadge: true,
-    ),
-    NotificationChannel(
-      channelKey: 'refilling_channel',
-      channelName: 'Scheduled Notifications',
-      channelDescription: 'This is a scheduled notification.',
-      defaultColor: Colors.teal,
-      locked: true,
-      importance: NotificationImportance.High,
-      soundSource: 'resource://raw/res_custom_notification',
-    ),
-  ]);
-
-  runApp(MultiProvider(
-    providers: [
-      ChangeNotifierProvider(create: (context) => GoalProvider()),
+  AwesomeNotifications().initialize(
+    'resource://drawable/res_white_logo',
+    [
+      NotificationChannel(
+        channelKey: 'key',
+        channelName: 'Basic Notifications',
+        channelDescription: 'Notification channel for basic notifications',
+        defaultColor: Colors.blue,
+        importance: NotificationImportance.High,
+        channelShowBadge: true,
+      ),
+      NotificationChannel(
+        channelKey: 'refilling_channel',
+        channelName: 'Scheduled Notifications',
+        channelDescription: 'This is a scheduled notification.',
+        defaultColor: Colors.teal,
+        locked: true,
+        importance: NotificationImportance.High,
+        soundSource: 'resource://raw/res_custom_notification',
+      ),
     ],
-    child: const ZaBoteru(),
-  ));
+  );
 
-  // runApp(DevicePreview(
-  //   enabled: !kReleaseMode,
-  //   builder: (BuildContext context) {
-  //     return MultiProvider(
-  //       providers: [
-  //         ChangeNotifierProvider(create: (context) => GoalProvider()),
-  //       ],
-  //       child: const ZaBoteru(),
-  //     );
-  //   },
-  // ));
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => GoalProvider()),
+      ],
+      child: const ZaBoteru(),
+    ),
+  );
+
+  // Uncomment the following code to enable the device preview and comment the above (runApp) syntax.
+
+  /*
+  runApp(
+    DevicePreview(
+      enabled: !kReleaseMode,
+      builder: (BuildContext context) {
+        return MultiProvider(
+          providers: [
+            ChangeNotifierProvider(create: (context) => GoalProvider()),
+          ],
+          child: const ZaBoteru(),
+        );
+      },
+    ),
+  );
+  */
 }
 
 class ZaBoteru extends StatelessWidget {
