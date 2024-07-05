@@ -38,10 +38,13 @@ ZaBoteru is a user-friendly mobile app designed to combat dehydration. Paired wi
 <a href="README-Assets/software-map.png"><img src="README-Assets/software-map.png" alt="Systm Architecture"></a>
 
 ### User Interface
+<div align="center">
 
 | Dashboard | Intake Calculator |
 | :-: | :-: |
 | <a href="README-Assets/Main_View_Dashboard.jpg"><img src="README-Assets/Main_View_Dashboard.jpg" width="200px" alt="ZaBoteru-Dashboard"></a> | <a href="README-Assets/Water_Intake_Calculator.jpg"><img src="README-Assets/Water_Intake_Calculator.jpg" width="200px" alt="ZaBoter-Intake_Calculator"></a> |
+
+</div>
 
 ## Install it NOW!
 
