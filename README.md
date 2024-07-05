@@ -1,5 +1,7 @@
 # ZaBoteru
 
+<a href="README-Assets/ZaBoteru.png"><img src="README-Assets/ZaBoteru.png" alt="ZaBoteru"></a>
+
 ## Table of Contents
 - [Description](#description)
 - [Features](#features)
@@ -13,15 +15,37 @@
 
 ## Description
 
+ZaBoteru is a user-friendly mobile app designed to combat dehydration. Paired with our innovative ZaBoteru Smart Bottle, it allows users to monitor their water intake and receive reminders to stay hydrated. Discover more features [here](#features).
+
 
 ## Features
+
+:white_check_mark: **Water Intake Calculator**
+
+:white_check_mark: **Water Intake Tracking**
+
+:white_check_mark: **Goal Reminders**
+
+:white_check_mark: **Control Water Temperature**
+
+:white_check_mark: **Control Water Sterilization**
 
 
 ## Quick Preview
 
+### Our System Architecture
+
+<a href="README-Assets/software-map.png"><img src="README-Assets/software-map.png" alt="Systm Architecture"></a>
+
+### User Interface
+
+| Dashboard | Intake Calculator |
+| :-: | :-: |
+| <a href="README-Assets/Main_View_Dashboard.jpg"><img src="README-Assets/Main_View_Dashboard.jpg" width="200px" alt="ZaBoteru-Dashboard"></a> | <a href="README-Assets/Water_Intake_Calculator.jpg"><img src="README-Assets/Water_Intake_Calculator.jpg" width="200px" alt="ZaBoter-Intake_Calculator"></a> |
 
 ## Install it NOW!
 
+Simply download the APK from [here](Built-Version) and install it on your device like any other app.
 
 ## Toolstack
 
@@ -29,6 +53,9 @@
 
 ## Future Updates
 
+- Provide the user with statistics on his/her water intake.
+- Enable the user to add other drinks.
+- Add a dark mode.
 
 ## Help
 
